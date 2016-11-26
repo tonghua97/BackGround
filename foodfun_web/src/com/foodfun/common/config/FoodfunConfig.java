@@ -1,5 +1,6 @@
 package com.foodfun.common.config;
 
+import com.foodfun.common.model._MappingKit;
 import com.foodfun.hello.HelloController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
