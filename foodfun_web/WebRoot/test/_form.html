@@ -1,0 +1,16 @@
+<fieldset class="solid">
+	<legend>创建test</legend>
+	<input type="hidden" name="test.id" value="${(test.id)!}" />
+	<div>
+		<label>标题</label>
+		<input type="text" name="test.Name" value="${(test.Name)!}" />${NameMsg!}
+	</div>
+	<div>
+		<label>内容</label>
+		<textarea name="test.content" cols="80" rows="10">${(test.content)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>&nbsp;</label>
+		<input value="提交" type="submit">
+	</div>
+</fieldset>
