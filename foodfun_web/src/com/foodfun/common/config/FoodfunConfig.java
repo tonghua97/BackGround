@@ -2,6 +2,7 @@ package com.foodfun.common.config;
 
 import com.foodfun.common.model._MappingKit;
 import com.foodfun.hello.HelloController;
+import com.foodfun.index.IndexController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -28,6 +29,8 @@ public class FoodfunConfig extends JFinalConfig{
 	 * 配置路由
 	 */
 	public void configRoute(Routes me) {
+		me.add("/", IndexController.class, "/index");	// 第三个参数为该Controller的视图存放路径
+		// 第三个参数省略时默认与第一个参数值相同，在此即为 "/hello"
 		me.add("/hello", HelloController.class);  
 	}
 	
