@@ -3,13 +3,12 @@ package com.foodfun.test;
 import java.util.List;
 
 import com.foodfun.common.model.Test;
-import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
 
 /**
- * BlogController
- * 锟斤拷锟斤拷 sql 锟斤拷业锟斤拷锟竭硷拷写锟斤拷 Model 锟斤拷 Service 锟叫ｏ拷锟斤拷要写锟斤拷 Controller 锟叫ｏ拷锟斤拷锟缴猴拷习锟竭ｏ拷锟斤拷锟斤拷锟节达拷锟斤拷锟斤拷目锟侥匡拷锟斤拷锟斤拷维锟斤拷
+ * TestController
+ * 所有 sql 与业务逻辑写在 Model 或 Service 中，不要写在 Controller 中，养成好习惯，有利于大型项目的开发与维护
  */
 //@Before(BlogInterceptor.class)
 public class TestController extends Controller {
@@ -31,11 +30,11 @@ public class TestController extends Controller {
 
 		// 拼接文件上传的完整路径
 		String fileName = "http://" + this.getRequest().getRemoteHost() + ":"
-				+ this.getRequest().getLocalPort() + "/upload/12/"
+				+ this.getRequest().getLocalPort() + "/upload/"
 				+ uf.getFileName();
 		
 		this.setAttr("fileName", fileName);
-		System.out.println("================fileName:"+fileName);
+		System.out.println("================fileName(test):"+fileName);
 		
 		//以json格式进行渲染
 		renderJson();

@@ -20,12 +20,12 @@
 				//校验数据
 
 				'swf' : 'uploadify/uploadify.swf', //指定上传控件的主体文件，默认‘uploader.swf’
-				'uploader' : '/upload', //指定服务器端上传处理文件，默认‘upload.php’
+				'uploader' : '/test/upload', //指定服务器端上传处理文件，默认‘upload.php’
 				'auto' : true, //自动上传
 				'buttonImage' : 'uploadify/uploadify-browse.png', //浏览按钮背景图片
 				'multi' : false, //单文件上传
 				'fileTypeExts' : '*.gif; *.jpg; *.png; *.flv; *.avi; *.mp4; *.mp3', //允许上传的文件后缀
-				'fileSizeLimit' : '300MB', //上传文件的大小限制，单位为B, KB, MB, 或 GB
+				'fileSizeLimit' : '30MB', //上传文件的大小限制，单位为B, KB, MB, 或 GB
 				'successTimeout' : 30, //成功等待时间
 				'onUploadSuccess' : function(file, data, response) {
 					//每成功完成一次文件上传时触发一次
