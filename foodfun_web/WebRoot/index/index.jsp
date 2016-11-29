@@ -1,12 +1,18 @@
-<#include "/common/_layout.html" />
-<@layout>
-<h1>test管理 ---&gt; 创建test
-</h1>
-<div class="form_box">
-	<form action="/test/save" method="post">
-		<#include "_form.html" />
-	</form>
-	<form action="/test/upload" method="post" enctype="multipart/form-data">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<base href="<%=basePath%>">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>index.jsp</title>
+
+<script src="uploadify/jquery.min.js" type="text/javascript"></script>
+<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css">
+</head>
+<body>
+	<form action="/upload" method="post" enctype="multipart/form-data">
 		<input type="file" name="file_upload" id="file_upload"/>
 		<input type="submit" name="uploadbutton" value="上传"/>
 	</form>
@@ -38,7 +44,6 @@
 					
 					$('#url').append("<li><img width=80 src="+image.fileName+" </li>");
 					
-					document.getElementById('content').value = image.fileName ;
 					/* var image=eval(data);
 					alert(image[0]["big"]); */
 				},
@@ -49,5 +54,5 @@
 			});
 		});
 	</script>
-</div>
-</@layout>
+</body>
+</html>

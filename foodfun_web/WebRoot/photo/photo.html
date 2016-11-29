@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<title>头像</title>
+		<link rel="stylesheet" type="text/css" href="../css/jquery.Jcrop.css">
+	</head>
+	<body>
+		<div class="content2">
+		<div class="formside">
+        <div id="info" class="info" style="color:red;"></div>
+        <form id="uploadImageForm" action="/user/updateTx" method="post" enctype="multipart/form-data">
+             <div style="height:30px;align:center">
+         图片文件（不得超过2M）<input id="image" name="image"  type="file" style="width:300px;overflow: hidden;border:none;/>
+                         <input id="add" type="button"  value="上传" class="btn"/>
+             </div>
+       </form>
+       <div style='max-width:730px;'><img id="currentPhoto" src="" style='display:none;max-width:730px;'></img></div>
+       <input id="save" type="button"  value="保存头像" class="btn" style='display:none;'/>
+    </div>
+	</div>
+	<form id='form_save' action="/user/save_portrait" style='display:none;'>
+		<input type='hidden' id='img_left' name='left' value='0'/>
+		<input type='hidden' id='img_top' name='top' value='0'/>
+		<input type='hidden' id='img_width' name='width' value='0'/>
+		<input type='hidden' id='img_height' name='height' value='0'/>
+	</form>
+	<script src="../js/jquery.min.js" type="text/javascript" ></script>
+<script src="../js/jquery.Jcrop.js" type="text/javascript" ></script>
+<script type="text/javascript">
+$("#add").click(function(){
+    if($("#image").val() == ""){
+        alert("请选择一个图片文件，再点击上传。");
+        return;
+    }else{
+        $("#uploadImageForm").ajaxSubmit({
+            dataType: 'json',
+            success:function(result,status){
+                if(result.success){
+                    var url=result.path;
+                    $("#currentPhoto").attr("src",url);
+                    $("#currentPhoto").show();
+                    $("#save").show();
+                    $("#add").hide();
+                    $('#currentPhoto').Jcrop({
+                        setSelect: [ 10, 10, 210, 210 ],
+                        aspectRatio: 1,
+                        onChange: showCoords,
+                        onSelect: showCoords
+                    });
+                }else{
+                    alert(result.msg);
+                }
+            },
+            error: function(result,status,e){  
+                alert(status);  
+            }
+        });  
+        return false;   
+    }
+});  
+ 
+function showCoords(c){
+    $('#img_left').val(c.x);
+    $('#img_top').val(c.y);
+    $('#img_width').val(c.w);
+    $('#img_height').val(c.h);
+};
+ 
+ 
+$('#save').click(function(){
+    var args = 'left='+$("#img_left").val()+'&top='+$("#img_top").val()+'&width='+$("#img_width").val()+'&height='+$("#img_height").val();
+    $.ajax({
+        url:'/user/saveTx?'+args,
+        type:'post',
+        dataType:'json',
+        success : function(data){
+            alert(data.msg);
+            location.href="/user";
+        }
+    });
+});
+	</body>
+</html>
