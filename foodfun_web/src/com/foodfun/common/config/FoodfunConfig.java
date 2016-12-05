@@ -11,6 +11,7 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
+import com.jfinal.ext.handler.ContextPathHandler;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
@@ -62,7 +63,9 @@ public class FoodfunConfig extends JFinalConfig{
 	/**
 	 * 配置处理器
 	 */
-	public void configHandler(Handlers me) {}
+	public void configHandler(Handlers me) {
+		me.add(new ContextPathHandler("base_path"));
+	}
 	/**
 	 * 建议使用 JFinal 手册推荐的方式启动项目
 	 * 运行此 main 方法可以启动项目，此main方法可以放置在任意的Class类定义中，不一定要放于此
