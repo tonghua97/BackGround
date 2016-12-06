@@ -10,6 +10,7 @@ import com.foodfun.common.model.Fun;
 import com.foodfun.common.model.Mclassify;
 import com.foodfun.common.model.Recipes;
 import com.foodfun.common.model.Test;
+import com.foodfun.common.model.User;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.json.Json;
@@ -119,5 +120,29 @@ public class HttpController extends Controller {
 		HttpServletRequest r = getRequest();
 		String classifyId = r.getParameter("classifyId");
 		String mclassifyId = r.getParameter("");
+	}
+	
+	/**
+	 * 根据账号密码登录
+	 */
+	public void isLogin(){
+		HttpServletRequest r = getRequest();
+		String userAccount = r.getParameter("userAccount");
+		String userPassword = r.getParameter("userPassword");
+		
+		User user = User.dao.findFirst("select * from user where"
+				+ "userAccount=" + "\"" + userAccount + "\"");
+		if(user != null){
+			User user2 = User.dao.findFirst("select * from user where"
+					+ "userAccount=" + "\"" + userAccount + "\"" 
+					+ "userPassword=" + "\"" + userPassword + "\"");
+			if(user2 != null){
+				renderText("1");
+			}else{
+				renderText("2");
+			}
+		}else{
+			renderText("0");
+		}
 	}
 }
