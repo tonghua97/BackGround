@@ -14,12 +14,13 @@ import com.jfinal.upload.UploadFile;
 //@Before(BlogInterceptor.class)
 public class TestController extends Controller {
 	public void index() {
-		setAttr("testPage", Test.me.paginate(getParaToInt(0, 1), 10));
+		setAttr("testPage", Test.me.paginate(getParaToInt(0, 1), 20));
 		render("test.html");
 	}
 	public void list(){
-		String username = getPara("Username");
-		List<Test> lb = Test.me.find("select * from test ",username);
+//		String username = getPara("Username");
+//		List<Test> lb = Test.me.find("select * from test ");
+		List<Test> lb = Test.me.find("select id,name from test");
 		renderJson(lb);
 	}
 
@@ -31,7 +32,7 @@ public class TestController extends Controller {
 
 		// 拼接文件上传的完整路径
 		String fileName = "http://" + this.getRequest().getRemoteHost() + ":"
-				+ this.getRequest().getLocalPort() + "/upload/12/"
+				+ this.getRequest().getLocalPort() + "/upload/"
 				+ uf.getFileName();
 		
 		this.setAttr("fileName", fileName);

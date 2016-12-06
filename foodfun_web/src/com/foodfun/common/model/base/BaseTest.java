@@ -33,4 +33,12 @@ public abstract class BaseTest<M extends BaseTest<M>> extends Model<M> implement
 		return get("content");
 	}
 
+	public void setUrl(java.lang.String url) {
+		set("url", url);
+	}
+
+	public java.lang.String getUrl() {
+		return get("url");
+	}
+
 }

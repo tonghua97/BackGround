@@ -1,0 +1,23 @@
+<fieldset class="solid">
+	<legend>创建拾趣</legend>
+	<div>
+		<label>拾趣编号</label>
+		<input type="text" name="fun.funId" value="${(fun.funId)!}" />${NameMsg!}
+	</div>
+	<div>
+		<label>标题</label>
+		<textarea id="content" name="fun.funTitle" class="text" cols="80" rows="1">${(fun.funTitle)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>内容</label>
+		<textarea id="content" name="fun.funContent" class="text" cols="80" rows="5">${(fun.funContent)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>图片url</label>
+		<textarea id="imageUrl" name="fun.funImage" class="text">${(fun.funImage)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>&nbsp;</label>
+		<input value="提交" type="submit">
+	</div>
+</fieldset>

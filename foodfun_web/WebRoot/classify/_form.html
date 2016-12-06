@@ -1,0 +1,23 @@
+<fieldset class="solid">
+	<legend>创建分类</legend>
+	<div>
+		<label>分类编号</label>
+		<input type="text" name="classify.classifyId" value="${(classify.classifyId)!}" />${NameMsg!}
+	</div>
+	<div>
+		<label>分类名称</label>
+		<textarea id="content" name="classify.classifyName" class="text" cols="80" rows="3">${(classify.classifyName)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>分类图标</label>
+		<textarea id="imageUrl" name="classify.classifyImage" class="text" cols="80" rows="3">${(classify.classifyImage)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>主分类编号</label>
+		<textarea id="content" name="classify.FKclassifyId" class="text" cols="80" rows="3">${(classify.FKclassifyId)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>&nbsp;</label>
+		<input value="提交" type="submit">
+	</div>
+</fieldset>

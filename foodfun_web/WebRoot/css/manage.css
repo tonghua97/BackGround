@@ -44,7 +44,9 @@ h1{font-size:15px;line-height:30px}
 .form_box form div label{float:left;padding-right:10px;text-align:right;width:130px}
 .form_box input{width:expression(this.type=="text"?"565px":"style")}
 .form_box form div label.error{width:auto;color:red;padding:0 0 0 10px}
-fieldset.solid{background:#fff;border:1px solid #1E7ACE;margin:10px;padding:10px}
+fieldset.solid{background:#fff;border:1px solid #1E7ACE;margin:10px;padding:10px;margin-bottom:0px;border-bottom:0px}
+fieldset.solid2{background:#fff;border:1px solid #1E7ACE;margin:10px;padding:10px;margin-top:0px;border-top:0px;margin-bottom:0px;border-bottom:0px;text-align:center}
+fieldset.solid3{background:#fff;border:1px solid #1E7ACE;margin:10px;padding:10px;margin-top:0px;border-top:0px}
 fieldset.solid legend{color:#1E7ACE;font-weight:700;border:1px solid #1E7ACE;background:#fff;margin:0 20px;padding:3px 20px}
 .form_box .site_monthly_reports_div input{width:expression(this.type=="text"?"100px":"style")}
 .form_box .site_monthly_reports_div input[type=text]{width:100px}
@@ -131,3 +133,4 @@ a.notice{font-size:200%;font-weight:700}
 #errorExplanation h2{text-align:left;font-weight:700;font-size:12px;background-color:#c00;color:#fff;margin:-7px;padding:5px 5px 5px 15px;}
 #errorExplanation p{color:#333;margin-bottom:0;padding:5px;}
 #errorExplanation ul li{font-size:12px;list-style:square;margin:0 0 0 10px;}
+.text{margin-bottom:10px}

@@ -7,12 +7,14 @@
 		<#include "_form.html" />
 	</form>
 	<form action="/test/upload" method="post" enctype="multipart/form-data">
-		<input type="file" name="file_upload" id="file_upload"/>
-		<input type="submit" name="uploadbutton" value="上传"/>
+		<fieldset class="solid2">
+			<input type="file" name="file_upload" id="file_upload"/>
+		</fieldset>
 	</form>
-	
 	<!--  文件上传成功之后，文件的地址显示在这里  -->
-	<ul id="url"></ul>
+	<fieldset class="solid3">
+		<ul id="url"></ul>
+	</fieldset>
 	
 	<script type="text/javascript">
 		$(function(){
@@ -20,7 +22,7 @@
 				//校验数据
 
 				'swf' : 'uploadify/uploadify.swf', //指定上传控件的主体文件，默认‘uploader.swf’
-				'uploader' : '/upload', //指定服务器端上传处理文件，默认‘upload.php’
+				'uploader' : '/test/upload', //指定服务器端上传处理文件，默认‘upload.php’
 				'auto' : true, //自动上传
 				'buttonImage' : 'uploadify/uploadify-browse.png', //浏览按钮背景图片
 				'multi' : false, //单文件上传
@@ -38,7 +40,7 @@
 					
 					$('#url').append("<li><img width=80 src="+image.fileName+" </li>");
 					
-					document.getElementById('content').value = image.fileName ;
+					document.getElementById('imageUrl').value = image.fileName ;
 					/* var image=eval(data);
 					alert(image[0]["big"]); */
 				},

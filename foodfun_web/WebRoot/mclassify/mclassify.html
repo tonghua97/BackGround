@@ -1,0 +1,32 @@
+<#include "/common/_layout.html"/>
+<@layout>
+<h1>主分类管理&nbsp;&nbsp;
+<a href="/mclassify/add">创建主分类</a>
+</h1>
+<div class="table_box">
+	<table class="list">
+		<tbody>
+			<tr>
+				<th width="8%">分类编号</th>
+				<th width="20%">分类名称</th>
+				<!-- <th width="30%">内容</th>
+				<th width="10%">图片</th> -->
+				<th width="12%">操作</th>
+			</tr>
+			
+			<#list testPage.getList() as x>
+			<tr>
+				<td style="text-align:left;">${x.mclassifyId}</td>
+				<td style="text-align:left;">${x.mclassifyName}</td>
+				<td style="text-align:left;">
+					&nbsp;&nbsp;<a href="/mclassify/delete/${x.mclassifyId}">删除</a>
+					&nbsp;&nbsp;<a href="/mclassify/edit/${x.mclassifyId}">修改</a>
+				</td>
+			</tr>
+			</#list>
+		</tbody>
+	</table>
+	<#include "/common/_paginate.html" />
+	<@paginate currentPage=blogPage.pageNumber totalPage=blogPage.totalPage actionUrl="/test/" />
+</div>
+</@layout>

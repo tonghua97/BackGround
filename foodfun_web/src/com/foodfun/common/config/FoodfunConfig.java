@@ -1,9 +1,17 @@
 package com.foodfun.common.config;
 
+import com.foodfun.classify.ClassifyController;
+import com.foodfun.collect.CollectController;
+import com.foodfun.commend.CommendController;
 import com.foodfun.common.model._MappingKit;
+import com.foodfun.fun.FunController;
 import com.foodfun.hello.HelloController;
+import com.foodfun.http.HttpController;
 import com.foodfun.index.IndexController;
+import com.foodfun.mclassify.MclassifyController;
+import com.foodfun.recipes.RecipesController;
 import com.foodfun.test.TestController;
+import com.foodfun.user.UserController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -34,6 +42,14 @@ public class FoodfunConfig extends JFinalConfig{
 		// 第三个参数省略时默认与第一个参数值相同，在此即为 "/hello"
 		me.add("/hello", HelloController.class);
 		me.add("/test", TestController.class);
+		me.add("/mclassify", MclassifyController.class);
+		me.add("/classify", ClassifyController.class);
+		me.add("/recipes", RecipesController.class);
+		me.add("/fun", FunController.class);
+		me.add("/commend", CommendController.class);
+		me.add("/user", UserController.class);
+		me.add("/collect", CollectController.class);
+		me.add("/http", HttpController.class);
 	}
 	
 	public static C3p0Plugin createC3p0Plugin() {

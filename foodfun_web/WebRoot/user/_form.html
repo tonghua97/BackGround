@@ -1,0 +1,31 @@
+<fieldset class="solid">
+	<legend>创建用户</legend>
+	<div>
+		<label>账号</label>
+		<textarea id="content" name="user.userAccount" class="text" cols="80" rows="1">${(user.userAccount)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>密码</label>
+		<textarea id="content" name="user.userPassword" class="text" cols="80" rows="1">${(user.userPassword)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>昵称</label>
+		<textarea id="content" name="user.userName" class="text" cols="80" rows="1">${(user.userName)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>邮箱</label>
+		<textarea id="content" name="user.userPost" class="text" cols="80" rows="1">${(user.userPost)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>手机号</label>
+		<textarea id="content" name="user.userNum" class="text" cols="80" rows="1">${(user.userNum)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>图片</label>
+		<textarea id="imageUrl" name="user.userImage" class="text">${(user.userImage)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>&nbsp;</label>
+		<input value="提交" type="submit">
+	</div>
+</fieldset>

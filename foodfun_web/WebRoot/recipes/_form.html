@@ -1,0 +1,59 @@
+<fieldset class="solid">
+	<legend>创建食谱</legend>
+	<div>
+		<label>食谱编号</label>
+		<input type="text" name="recipes.recipesId" value="${(recipes.recipesId)!}" />${NameMsg!}
+	</div>
+	<div>
+		<label>食谱名称</label>
+		<textarea id="content" name="recipes.recipesName" class="text" cols="80" rows="1">${(recipes.recipesName)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>主料</label>
+		<textarea id="content" name="recipes.recipesMfood" class="text" cols="80" rows="1">${(recipes.recipesMfood)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>辅料</label>
+		<textarea id="content" name="recipes.recipesFood" class="text" cols="80" rows="1">${(recipes.recipesFood)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>难易程度</label>
+		<textarea id="content" name="recipes.recipesLevel" class="text" cols="80" rows="1">${(recipes.recipesLevel)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>简介</label>
+		<textarea id="content" name="recipes.recipesIntro" class="text" cols="80" rows="1">${(recipes.recipesIntro)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>时间</label>
+		<textarea id="content" name="recipes.recipesTime" class="text" cols="80" rows="1">${(recipes.recipesTime)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>步骤</label>
+		<textarea id="content" name="recipes.recipesStep" class="text" cols="80" rows="1">${(recipes.recipesStep)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>功效</label>
+		<textarea id="content" name="recipes.FKrecipesEffect" class="text" cols="80" rows="1">${(recipes.FKrecipesEffect)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>口味</label>
+		<textarea id="content" name="recipes.FKrecipesTaste" class="text" cols="80" rows="1">${(recipes.FKrecipesTaste)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>所属菜系</label>
+		<textarea id="content" name="recipes.FKrecipesType" class="text" cols="80" rows="1">${(recipes.FKrecipesType)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>功效2</label>
+		<textarea id="content" name="recipes.recipesEffect" class="text" cols="80" rows="1">${(recipes.recipesEffect)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>图片url</label>
+		<textarea id="imageUrl" name="recipes.recipesImage" class="text">${(recipes.recipesImage)!}</textarea>${contentMsg!}
+	</div>
+	<div>
+		<label>&nbsp;</label>
+		<input value="提交" type="submit">
+	</div>
+</fieldset>
