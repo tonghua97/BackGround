@@ -9,11 +9,11 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseClassify<M extends BaseClassify<M>> extends Model<M> implements IBean {
 
-	public void setClassifyId(java.lang.String classifyId) {
+	public void setClassifyId(java.lang.Integer classifyId) {
 		set("classifyId", classifyId);
 	}
 
-	public java.lang.String getClassifyId() {
+	public java.lang.Integer getClassifyId() {
 		return get("classifyId");
 	}
 
@@ -33,11 +33,11 @@ public abstract class BaseClassify<M extends BaseClassify<M>> extends Model<M> i
 		return get("classifyImage");
 	}
 
-	public void setFKclassifyId(java.lang.String FKclassifyId) {
+	public void setFKclassifyId(java.lang.Integer FKclassifyId) {
 		set("FKclassifyId", FKclassifyId);
 	}
 
-	public java.lang.String getFKclassifyId() {
+	public java.lang.Integer getFKclassifyId() {
 		return get("FKclassifyId");
 	}
 

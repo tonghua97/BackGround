@@ -9,11 +9,11 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseFun<M extends BaseFun<M>> extends Model<M> implements IBean {
 
-	public void setFunId(java.lang.String funId) {
+	public void setFunId(java.lang.Integer funId) {
 		set("funId", funId);
 	}
 
-	public java.lang.String getFunId() {
+	public java.lang.Integer getFunId() {
 		return get("funId");
 	}
 

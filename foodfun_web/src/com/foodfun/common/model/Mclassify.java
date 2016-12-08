@@ -11,6 +11,6 @@ public class Mclassify extends BaseMclassify<Mclassify> {
 	public static final Mclassify dao = new Mclassify();
 	
 	public Page<Mclassify> paginate(int pageNumber, int pageSize) {
-		return paginate(pageNumber, pageSize, "select *", "from mclassify");
+		return paginate(pageNumber, pageSize, "select *", "from mclassify order by mclassifyId asc");
 	}
 }

@@ -1,9 +1,6 @@
 <fieldset class="solid">
 	<legend>创建分类</legend>
-	<div>
-		<label>分类编号</label>
-		<input type="text" name="classify.classifyId" value="${(classify.classifyId)!}" />${NameMsg!}
-	</div>
+	<input type="hidden" name="classify.classifyId" value="${(classify.classifyId)!}" />
 	<div>
 		<label>分类名称</label>
 		<textarea id="content" name="classify.classifyName" class="text" cols="80" rows="3">${(classify.classifyName)!}</textarea>${contentMsg!}

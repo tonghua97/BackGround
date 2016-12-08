@@ -9,11 +9,11 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseCollect<M extends BaseCollect<M>> extends Model<M> implements IBean {
 
-	public void setCollectId(java.lang.String collectId) {
+	public void setCollectId(java.lang.Integer collectId) {
 		set("collectId", collectId);
 	}
 
-	public java.lang.String getCollectId() {
+	public java.lang.Integer getCollectId() {
 		return get("collectId");
 	}
 
@@ -25,20 +25,12 @@ public abstract class BaseCollect<M extends BaseCollect<M>> extends Model<M> imp
 		return get("FKcollectUser");
 	}
 
-	public void setFKrecipesId(java.lang.String FKrecipesId) {
+	public void setFKrecipesId(java.lang.Integer FKrecipesId) {
 		set("FKrecipesId", FKrecipesId);
 	}
 
-	public java.lang.String getFKrecipesId() {
+	public java.lang.Integer getFKrecipesId() {
 		return get("FKrecipesId");
-	}
-
-	public void setFKfunId(java.lang.String FKfunId) {
-		set("FKfunId", FKfunId);
-	}
-
-	public java.lang.String getFKfunId() {
-		return get("FKfunId");
 	}
 
 }

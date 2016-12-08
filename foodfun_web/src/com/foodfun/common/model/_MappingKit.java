@@ -20,6 +20,7 @@ public class _MappingKit {
 		arp.addMapping("collect", "collectId", Collect.class);
 		arp.addMapping("commend", "commendId", Commend.class);
 		arp.addMapping("fun", "funId", Fun.class);
+		arp.addMapping("funcollect", "funcollectId", Funcollect.class);
 		arp.addMapping("mclassify", "mclassifyId", Mclassify.class);
 		arp.addMapping("openuser", "id", Openuser.class);
 		arp.addMapping("recipes", "recipesId", Recipes.class);

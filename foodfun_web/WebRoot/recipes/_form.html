@@ -1,9 +1,6 @@
 <fieldset class="solid">
 	<legend>创建食谱</legend>
-	<div>
-		<label>食谱编号</label>
-		<input type="text" name="recipes.recipesId" value="${(recipes.recipesId)!}" />${NameMsg!}
-	</div>
+	<input type="hidden" name="recipes.recipesId" value="${(recipes.recipesId)!}" />
 	<div>
 		<label>食谱名称</label>
 		<textarea id="content" name="recipes.recipesName" class="text" cols="80" rows="1">${(recipes.recipesName)!}</textarea>${contentMsg!}

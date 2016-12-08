@@ -9,19 +9,19 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseCommend<M extends BaseCommend<M>> extends Model<M> implements IBean {
 
-	public void setCommendId(java.lang.String commendId) {
+	public void setCommendId(java.lang.Integer commendId) {
 		set("commendId", commendId);
 	}
 
-	public java.lang.String getCommendId() {
+	public java.lang.Integer getCommendId() {
 		return get("commendId");
 	}
 
-	public void setFKcommendId(java.lang.String FKcommendId) {
+	public void setFKcommendId(java.lang.Integer FKcommendId) {
 		set("FKcommendId", FKcommendId);
 	}
 
-	public java.lang.String getFKcommendId() {
+	public java.lang.Integer getFKcommendId() {
 		return get("FKcommendId");
 	}
 

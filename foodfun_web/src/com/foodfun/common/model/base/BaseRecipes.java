@@ -9,11 +9,11 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseRecipes<M extends BaseRecipes<M>> extends Model<M> implements IBean {
 
-	public void setRecipesId(java.lang.String recipesId) {
+	public void setRecipesId(java.lang.Integer recipesId) {
 		set("recipesId", recipesId);
 	}
 
-	public java.lang.String getRecipesId() {
+	public java.lang.Integer getRecipesId() {
 		return get("recipesId");
 	}
 
@@ -81,27 +81,27 @@ public abstract class BaseRecipes<M extends BaseRecipes<M>> extends Model<M> imp
 		return get("recipesCollect");
 	}
 
-	public void setFKrecipesEffect(java.lang.String FKrecipesEffect) {
+	public void setFKrecipesEffect(java.lang.Integer FKrecipesEffect) {
 		set("FKrecipesEffect", FKrecipesEffect);
 	}
 
-	public java.lang.String getFKrecipesEffect() {
+	public java.lang.Integer getFKrecipesEffect() {
 		return get("FKrecipesEffect");
 	}
 
-	public void setFKrecipesTaste(java.lang.String FKrecipesTaste) {
+	public void setFKrecipesTaste(java.lang.Integer FKrecipesTaste) {
 		set("FKrecipesTaste", FKrecipesTaste);
 	}
 
-	public java.lang.String getFKrecipesTaste() {
+	public java.lang.Integer getFKrecipesTaste() {
 		return get("FKrecipesTaste");
 	}
 
-	public void setFKrecipesType(java.lang.String FKrecipesType) {
+	public void setFKrecipesType(java.lang.Integer FKrecipesType) {
 		set("FKrecipesType", FKrecipesType);
 	}
 
-	public java.lang.String getFKrecipesType() {
+	public java.lang.Integer getFKrecipesType() {
 		return get("FKrecipesType");
 	}
 
