@@ -24,7 +24,7 @@
 	font-size:25px;
 }
 
-.solid div{
+.solid_div{
 	margin: 10px 0px;
 	float:left;
 }
@@ -32,6 +32,7 @@
 	float:right;
 	width:700px;
 	height:400px;
+	margin:0;
 }
 .solid div textarea{
 	margin-left:10px;

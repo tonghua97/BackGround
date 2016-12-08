@@ -31,6 +31,6 @@ public class CutImage {
         left = Math.min(Math.max(0, left), bi.getWidth()-width);     
                 
         BufferedImage bi_cropper = bi.getSubimage(left, top, width, height);     
-        return ImageIO.write(bi_cropper, "jpeg", fileDest);
+        return ImageIO.write(bi_cropper, "png", fileDest);
     }
 }
