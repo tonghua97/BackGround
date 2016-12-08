@@ -62,7 +62,7 @@ public class RecipesController extends Controller {
      
         File source = new File(PathKit.getWebRootPath() + "\\upload\\" + imageName);
         String fileName = source.getName();
-        
+        //String prefix=fileName.substring(fileName.lastIndexOf(".")+1);
         System.out.println(fileName);
         
         boolean isSave = CutImage.saveImage(source,PathKit.getWebRootPath()+"\\upload\\img\\" + fileName,top,left,width,height);
