@@ -50,10 +50,10 @@ public class HelloController extends Controller {
         	String url = "http://" + this.getRequest().getRemoteAddr() + ":"
     				+ this.getRequest().getLocalPort() + "/upload/img/"
     				+ fileName;
-            setAttr("msg", "头像更新成功！");
+            setAttr("msg", "图片更新成功！");
             setAttr("url", url);
         }else{
-        	setAttr("msg", "头像更新失败！");
+        	setAttr("msg", "图片更新失败！");
         }
         renderJson();
 	}

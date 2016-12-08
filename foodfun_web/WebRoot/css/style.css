@@ -302,7 +302,7 @@ li#menu-academico{
 .navbar a {
 	color:#ffffff;
 }
-
+.table_box .pagination{float:right;font-size:14px;padding:5px}
 /*----*/
 .mother-grid-inner{
 	padding:0 2em;

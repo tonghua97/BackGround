@@ -19,7 +19,7 @@
 				<th width="20%" style="text-align:center;">收藏数量</th>				
 				<th width="20%" style="text-align:center;">操作</th>
 			</tr>
-			<#list testPage.getList() as x>
+			<#list recipesPage.getList() as x>
 			<tr style="border:1px solid #999999">
 				<td style="text-align:center;">${x.recipesId}</td>
 				<td style="text-align:center;">${x.recipesName}</td>
@@ -36,6 +36,6 @@
 		</tbody>
 	</table>
 	<#include "/common/_paginate.html" />
-	<!--@paginate currentPage=recipesPage.pageNumber totalPage=recipesPage.totalPage actionUrl="/recipes/" /-->
+	<@paginate currentPage=recipesPage.pageNumber totalPage=recipesPage.totalPage actionUrl="/recipes/" />
 </div>
 </@layout>

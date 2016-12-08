@@ -1,13 +1,18 @@
 package com.foodfun.recipes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import com.foodfun.common.model.Classify;
 import com.foodfun.common.model.Mclassify;
 import com.foodfun.common.model.Recipes;
 import com.foodfun.common.model.Test;
+import com.foodfun.utils.CutImage;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
+import com.jfinal.kit.PathKit;
+import com.jfinal.render.JsonRender;
 import com.jfinal.upload.UploadFile;
 
 /**
@@ -16,7 +21,7 @@ import com.jfinal.upload.UploadFile;
 //@Before(BlogInterceptor.class)
 public class RecipesController extends Controller {
 	public void index() {
-		setAttr("testPage", Recipes.dao.paginate(getParaToInt(0, 1), 20));
+		setAttr("recipesPage", Recipes.dao.paginate(getParaToInt(0, 1), 10));
 		render("recipes.html");
 	}
 
@@ -29,20 +34,48 @@ public class RecipesController extends Controller {
 		renderJson(r);
 	}
 	
-	public void upload() {
+	public void upload(){
 		// 获取上传的文件
-		UploadFile uf = getFile("Filedata");
-
+		UploadFile uf = getFile("img_poster");
+		//获取文件名
+		String fileName = uf.getFileName();
+		
 		// 拼接文件上传的完整路径
-		String fileName = "http://" + this.getRequest().getRemoteHost() + ":"
+		String fileUrl = "http://" + this.getRequest().getRemoteAddr() + ":"
 				+ this.getRequest().getLocalPort() + "/upload/"
 				+ uf.getFileName();
-		
-		this.setAttr("fileName", fileName);
-		System.out.println("================fileName:"+fileName);
-		
+		//返回图片名称、url路径
+		setAttr("fileName", fileName);
+		setAttr("fileUrl", fileUrl);
+			
 		//以json格式进行渲染
-		renderJson();
+		render(new JsonRender().forIE());
+		//renderJson();
+	}
+	public void ajaxImageCut() throws IOException{
+        String imageName =getPara("imgName");
+        int left= getParaToInt("x1");
+        int top= getParaToInt("y1");
+        int width= getParaToInt("cw");
+        int height= getParaToInt("ch");
+        System.out.println("================"+left);
+     
+        File source = new File(PathKit.getWebRootPath() + "\\upload\\" + imageName);
+        String fileName = source.getName();
+        
+        System.out.println(fileName);
+        
+        boolean isSave = CutImage.saveImage(source,PathKit.getWebRootPath()+"\\upload\\img\\" + fileName,top,left,width,height);
+        if(isSave){
+        	String url = "http://" + this.getRequest().getRemoteAddr() + ":"
+    				+ this.getRequest().getLocalPort() + "/upload/img/"
+    				+ fileName;
+            setAttr("msg", "图片更新成功！");
+            setAttr("url", url);
+        }else{
+        	setAttr("msg", "图片更新失败！");
+        }
+        renderJson();
 	}
 	
 	public void save() {

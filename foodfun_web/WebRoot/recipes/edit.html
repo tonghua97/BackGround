@@ -49,7 +49,7 @@
 			//ajax文件上传
 			function ajaxFileUpload() {
 				$.ajaxFileUpload({
-						url: '/hello/upload', //用于文件上传的服务器端请求地址
+						url: '/recipes/upload', //用于文件上传的服务器端请求地址
 						secureuri: false, //一般设置为false
 						fileElementId: 'img_poster', //文件上传空间的id属性
 						dataType: 'json', //返回值类型 一般设置为json
@@ -96,7 +96,7 @@
 									+ "&ch="+parseInt($("#ch").val());
 			   $.ajax({
 				  type: "post",
-				  url: "/hello/ajaxImageCut?"+args,
+				  url: "/recipes/ajaxImageCut?"+args,
 				  datatype: "json",
 				  success: function (data) {
 					alert(data.msg);
