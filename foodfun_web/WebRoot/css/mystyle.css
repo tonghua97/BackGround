@@ -1,0 +1,38 @@
+.button_add{
+	float:right;
+	color:#fff;
+	background-color:#9ccc65;
+	border-radius:5px;
+	border:0px solid;
+	padding:3px;
+}
+.form_box{
+	padding-left:30px;
+	padding-right:30px;
+}
+.list tbody tr th{
+	text-align:center;
+	padding-bottom:5px;
+}
+.border_list{
+	border:1px solid #999999
+}
+.border_list td{
+	text-align:center;
+}
+.border_list td a i{
+	font-size:25px;
+}
+
+.solid div{
+	margin: 10px 0px;
+	float:left;
+}
+#image_show{
+	float:right;
+	width:700px;
+	height:400px;
+}
+.solid div textarea{
+	margin-left:10px;
+}

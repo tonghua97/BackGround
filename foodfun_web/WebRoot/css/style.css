@@ -274,13 +274,12 @@ li#menu-academico{
 .panel-body.ont {
     padding: 14px;
 }
-/*#logo
-{
-    width: 150px;
-    height: 64px;
-    vertical-align: middle;
-    -webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
-}*/
+.icon_logo{
+	width:40px;
+	float:left;
+	margin-left:20px;
+	margin-top:5px;
+}
 
 .fa-html5 {
   color: #fff;
@@ -301,6 +300,9 @@ li#menu-academico{
 }
 .navbar a {
 	color:#ffffff;
+}
+.navbar-brand{
+	float:left;
 }
 .table_box .pagination{float:right;font-size:14px;padding:5px}
 /*----*/

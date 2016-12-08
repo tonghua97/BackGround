@@ -6,30 +6,30 @@
 		<i class="icon-angle-right"></i>
 		<span>食谱</span>
 	</li>
-	<a href="/recipes/add" style="float:right;color:#fff;background-color:#9ccc65;border-radius:5px;border:0px solid;padding:3px;">添加食谱</a>
+	<a href="/recipes/add" class="button_add">添加食谱</a>
 </ol>
 <div>
 	<div class="table_box">
 	<table class="list" >
 		<tbody>
 			<tr>
-				<th width="15%" style="text-align:center;padding-bottom:5px">食谱编号</th>
-				<th width="15%" style="text-align:center;">食谱名称</th>
-				<th width="30%" style="text-align:center;">图片</th>
-				<th width="20%" style="text-align:center;">收藏数量</th>				
-				<th width="20%" style="text-align:center;">操作</th>
+				<th width="15%">食谱编号</th>
+				<th width="15%">食谱名称</th>
+				<th width="30%">图片</th>
+				<th width="20%">收藏数量</th>				
+				<th width="20%">操作</th>
 			</tr>
 			<#list recipesPage.getList() as x>
-			<tr style="border:1px solid #999999">
-				<td style="text-align:center;">${x.recipesId}</td>
-				<td style="text-align:center;">${x.recipesName}</td>
-				<td style="text-align:center;"><img src="${x.recipesImage}" style="height:105px;width:60%;"/></td>			
-				<td style="text-align:center;">${x.recipesCollect}</td>
-				<td style="text-align:center;">
-					<a href="" title="详情"><i class="icon-inbox" style="font-size:25px;"></i></a>
-					&nbsp;&nbsp;<a href="" title="添加至推荐"><i class="icon-bookmark-empty" style="font-size:25px;"></i></a>
-					&nbsp;&nbsp;<a href="/recipes/edit/${x.recipesId}" title="编辑"><i class="icon-edit" style="font-size:25px;"></i></a>
-					&nbsp;<a href="/recipes/delete/${x.recipesId}" title="删除"><i class="icon-trash" style="font-size:25px;"></i></a>
+			<tr class="border_list">
+				<td>${x.recipesId}</td>
+				<td>${x.recipesName}</td>
+				<td><img src="${x.recipesImage}" style="height:105px;width:60%;"/></td>			
+				<td>${x.recipesCollect}</td>
+				<td>
+					<a href="" title="详情"><i class="icon-inbox"></i></a>
+					&nbsp;&nbsp;<a href="" title="添加至推荐"><i class="icon-bookmark-empty"></i></a>
+					&nbsp;&nbsp;<a href="/recipes/edit/${x.recipesId}" title="编辑"><i class="icon-edit"></i></a>
+					&nbsp;<a href="/recipes/delete/${x.recipesId}" title="删除"><i class="icon-trash"></i></a>
 				</td>
 			</tr>
 			</#list>
