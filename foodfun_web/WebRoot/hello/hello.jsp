@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>jsp</title>
-	<!--jquery文件-->
+		<!--jquery文件-->
         <script src="js/jquery.min.js" type="text/javascript"></script>
         <!--jcrop文件-->
         <script src="js/jquery.Jcrop.js" type="text/javascript"></script>
@@ -14,7 +14,6 @@
 		<script src="js/ajaxfileupload.js" type="text/javascript"></script>
 </head>
 <body>
-	<form>
 		<input type="file" name="img_poster" id="img_poster" onchange="ajaxFileUpload()"/>
 		
 		<div class="cutDiv">

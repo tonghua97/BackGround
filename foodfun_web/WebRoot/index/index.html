@@ -1,15 +1,84 @@
-<#include "/common/_layout.html"/>
+<#include "/common/layout.html"/>
 <@layout>
-<h1>食趣后台 首页</h1>
-<div class="table_box">
-	<h1>欢迎来到 食趣 后台管理!  :)</h1>
-	
-	<br><br><br>
-	
-	本Demo采用FreeMarker 作为视图文件，您还可以使用Jsp、Velocity或自定义类型视图。
-	点击<a href="/blog"><b>此处</b></a>开始试用Demo。
-	
-	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-</div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="/">首页</a>
+		</li>
+	</ol>
+	<div>
+		<div style="float:left; width:100%;border-bottom:1px solid #999999;padding-bottom:5px;">
+			<h4 style="font-family:微软雅黑;border-bottom:1px solid #999999;padding-bottom:5px;">数据统计</h4>
+			<div style="padding-left:10px;padding-right:10px;">
+				<div style="float:left;width:33%;">
+					<div>
+						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
+							<p style="font-size:50px;font-family:微软雅黑;margin-bottom:2px;">123</p>
+							<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">食谱 Cookbook</p>					
+						</div>				
+					</div>
+				</div>
+				<div style="float:left;width:33%;">
+					<div>
+						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
+							<p style="font-size:50px;font-family:微软雅黑;margin-bottom:2px;">11</p>
+							<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">推荐 Commend</p>					
+						</div>				
+					</div>
+				</div>
+				<div style="float:left;width:33%;">
+					<div>
+						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
+							<p style="font-size:50px;font-family:微软雅黑;margin-bottom:2px;">32</p>
+							<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">拾趣 Pickfun</p>					
+						</div>			
+					</div>
+				</div>
+			</div>		
+		</div>
+		<div style="float:left; width:100%;">
+			<h4 style="font-family:微软雅黑;border-bottom:1px solid #999999;padding-bottom:5px;">用户统计</h4>
+			<div>
+				<div style="float:left;width:48%;border:1px solid #999999;margin:10px;padding:10px;background:#ffffff;">
+					<div>
+						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
+							<p style="font-size:40px;font-family:微软雅黑;margin-bottom:2px;">102</p>
+							<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">用户 User</p>					
+						</div>
+						<div>
+							<div style="float:left;width:50%;margin-left:30px">
+								<p style="font-size:40px;font-family:微软雅黑;margin-bottom:2px;">85%</p>
+								<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">本站用户</p>
+							</div>
+							<div style="float:left;width:40%">
+								<p style="font-size:40px;font-family:微软雅黑;margin-bottom:2px;">15%</p>
+								<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">第三方用户</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="float:left;width:48%;border:1px solid #999999;margin:10px;padding:10px;background:#ffffff;">
+					<div>
+						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
+							<p style="font-size:20px;font-family:微软雅黑;margin-bottom:2px;">近期登录</p>
+						</div>
+						<ul style="font-size:20px;font-family:微软雅黑;margin-top:10px;margin-bottom:4px">
+							<li>username</li>
+							<li>username</li>
+							<li>username</li>
+							<li>username</li>
+							<li>username</li>
+						</ul>						
+					</div>
+				</div>
+			</div>		
+		</div>
+		
+	</div>
+	 <!-- 右侧底栏start here-->
+	<div class="copyrights" style="float:left;width:100%">
+		<p>
+			Copyright &copy; 2016.Company name All rights reserved.
+		</p>
+	</div>
+	<!--COPY rights end here-->
 </@layout>

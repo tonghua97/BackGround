@@ -48,7 +48,7 @@ public class HelloController extends Controller {
         boolean isSave = CutImage.saveImage(source,PathKit.getWebRootPath()+"\\upload\\img\\" + fileName,top,left,width,height);
         if(isSave){
         	String url = "http://" + this.getRequest().getRemoteAddr() + ":"
-    				+ this.getRequest().getLocalPort() + "/upload/img"
+    				+ this.getRequest().getLocalPort() + "/upload/img/"
     				+ fileName;
             setAttr("msg", "头像更新成功！");
             setAttr("url", url);

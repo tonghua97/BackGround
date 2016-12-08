@@ -1,54 +1,41 @@
-<#include "/common/_layout.html"/>
+<#include "/common/layout.html"/>
 <@layout>
-<h1>食谱管理&nbsp;&nbsp;
-<a href="/recipes/add">创建食谱</a>
-</h1>
-<div class="table_box">
-	<table class="list">
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<span>食谱</span>
+	</li>
+	<a href="/recipes/add" style="float:right;color:#fff;background-color:#9ccc65;border-radius:5px;border:0px solid;padding:3px;">添加食谱</a>
+</ol>
+<div>
+	<div class="table_box">
+	<table class="list" >
 		<tbody>
 			<tr>
-				<th width="2%">食谱编号</th>
-				<th width="4%">食谱名称</th>
-				<th width="4%">主料</th>
-				<th width="4%">辅料</th>
-				<th width="4%">难易程度</th>
-				<th width="20%">简介</th>
-				<th width="2%">时间</th>
-				<th width="10%">步骤</th>
-				<th width="2%">收藏数量</th>
-				<th width="4%">功效</th>
-				<th width="4%">口味</th>
-				<th width="4%">所属菜系</th>
-				<th width="10%">功效2</th>
-				<th width="4%">图片</th>
-				<th width="20%">操作</th>
+				<th width="15%" style="text-align:center;padding-bottom:5px">食谱编号</th>
+				<th width="15%" style="text-align:center;">食谱名称</th>
+				<th width="30%" style="text-align:center;">图片</th>
+				<th width="20%" style="text-align:center;">收藏数量</th>				
+				<th width="20%" style="text-align:center;">操作</th>
 			</tr>
-			
 			<#list testPage.getList() as x>
-			<tr>
-				<td style="text-align:left;">${x.recipesId}</td>
-				<td style="text-align:left;">${x.recipesName}</td>
-				<td style="text-align:left;">${x.recipesMfood}</td>
-				<td style="text-align:left;">${x.recipesFood}</td>
-				<td style="text-align:left;">${x.recipesLevel}</td>
-				<td style="text-align:left;">${x.recipesIntro}</td>
-				<td style="text-align:left;">${x.recipesTime}</td>
-				<td style="text-align:left;">${x.recipesStep}</td>
-				<td style="text-align:left;">${x.recipesCollect}</td>
-				<td style="text-align:left;">${x.FKrecipesEffect}</td>
-				<td style="text-align:left;">${x.FKrecipesTaste}</td>
-				<td style="text-align:left;">${x.FKrecipesType}</td>
-				<td style="text-align:left;">${x.recipesEffect}</td>
-				<td style="text-align:left;">${x.recipesImage}</td>
-				<td style="text-align:left;">
-					&nbsp;&nbsp;<a href="/recipes/delete/${x.recipesId}">删除</a>
-					&nbsp;&nbsp;<a href="/recipes/edit/${x.recipesId}">修改</a>
+			<tr style="border:1px solid #999999">
+				<td style="text-align:center;">${x.recipesId}</td>
+				<td style="text-align:center;">${x.recipesName}</td>
+				<td style="text-align:center;"><img src="${x.recipesImage}" style="height:105px;width:60%;"/></td>			
+				<td style="text-align:center;">${x.recipesCollect}</td>
+				<td style="text-align:center;">
+					<a href="" title="详情"><i class="icon-inbox" style="font-size:25px;"></i></a>
+					&nbsp;&nbsp;<a href="" title="添加至推荐"><i class="icon-bookmark-empty" style="font-size:25px;"></i></a>
+					&nbsp;&nbsp;<a href="/recipes/edit/${x.recipesId}" title="编辑"><i class="icon-edit" style="font-size:25px;"></i></a>
+					&nbsp;<a href="/recipes/delete/${x.recipesId}" title="删除"><i class="icon-trash" style="font-size:25px;"></i></a>
 				</td>
 			</tr>
 			</#list>
 		</tbody>
 	</table>
 	<#include "/common/_paginate.html" />
-	<@paginate currentPage=blogPage.pageNumber totalPage=blogPage.totalPage actionUrl="/test/" />
+	<!--@paginate currentPage=recipesPage.pageNumber totalPage=recipesPage.totalPage actionUrl="/recipes/" /-->
 </div>
 </@layout>

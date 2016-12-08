@@ -1,55 +1,116 @@
-<#include "/common/_layout.html" />
+<#include "/common/layout.html" />
 <@layout>
-<h1>食谱管理 ---&gt; 修改食谱
-</h1>
-<div class="form_box">
-	<form action="/recipes/update" method="post">
-		<#include "_form.html" />
-	</form>
-	<form action="/recipes/upload" method="post" enctype="multipart/form-data">
-		<fieldset class="solid2">
-			<input type="file" name="file_upload" id="file_upload"/>
-			<input type="submit" name="uploadbutton" value="上传"/>
-		</fieldset>
-	</form>
-	
-	<!--  文件上传成功之后，文件的地址显示在这里  -->
-	<ul id="url"></ul>
-	
-	<script type="text/javascript">
-		$(function(){
-			$("#file_upload").uploadify({
-				//校验数据
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<a href="/recipes">食谱</a>
+		<i class="icon-angle-right"></i>
+		<span>修改食谱</span>
+	</li>
+	<a href="/recipes/add" style="float:right;color:#fff;background-color:#9ccc65;border-radius:5px;border:0px solid;padding:3px;">添加食谱</a>
+</ol>
+<div>
+	<div class="form_box" style="padding-left:30px;padding-right:30px">
+		<form action="/recipes/update" method="post">
+			<#include "_form.html" />
+		</form>		
+		<script type="text/javascript">
+			var _jcropApi, _boundx, _boundy, _ratio=2;//定义比例、长宽等
+			$(document).ready(function() {   
+				//取消按钮事件   
+				$("#cancelimg").click(function() {
+					$("#img_hotLine").attr('value','');
+					$(".img-group").show();
+					$("#cutDiv").hide();
 
-				'swf' : 'uploadify/uploadify.swf', //指定上传控件的主体文件，默认‘uploader.swf’
-				'uploader' : '/recipes/upload', //指定服务器端上传处理文件，默认‘upload.php’
-				'auto' : true, //自动上传
-				'buttonImage' : 'uploadify/uploadify-browse.png', //浏览按钮背景图片
-				'multi' : false, //单文件上传
-				'fileTypeExts' : '*.gif; *.jpg; *.png; *.flv; *.avi; *.mp4; *.mp3', //允许上传的文件后缀
-				'fileSizeLimit' : '300MB', //上传文件的大小限制，单位为B, KB, MB, 或 GB
-				'successTimeout' : 30, //成功等待时间
-				'onUploadSuccess' : function(file, data, response) {
-					//每成功完成一次文件上传时触发一次
-					var image=eval("["+data+']')[0];
-					//alert('===file:'+file);
-					//alert('===data:'+data);//json格式
-					//alert('===response:'+response);//true
-					//alert('===image:'+image);
-					//alert('===image.fileName:'+image.fileName);
-					
-					$('#url').append("<li><img width=80 src="+image.fileName+" </li>");
-					
-					document.getElementById('imageUrl').value = image.fileName ;
-					/* var image=eval(data);
-					alert(image[0]["big"]); */
-				},
-				'onUploadError' : function(file, data, response) {
-					//当上传返回错误时触发
-					$('#url').append("<li>" + data + "</li>");
-				}
+					if (_jcropApi) {
+						_jcropApi.destroy();
+					}
+				$("#img1").hide();
+			  });
+				//裁剪上传按钮事件
+				$("#cutimg").click(function() {
+					ajaxFileCut();
+				});        
+			 
+				
 			});
-		});
-	</script>
+			//当裁剪框变动时，将左上角相对图片的X坐标与Y坐标，宽度以及高度放到<input type="hidden">中    (上传到服务器上裁剪会用到)
+			function showCoords(c) {
+					$('#x1').val(c.x * _ratio);
+					$('#y1').val(c.y * _ratio);
+					$('#x2').val(c.x2 * _ratio);
+					$('#y2').val(c.y2 * _ratio);
+					$('#cw').val(c.w * _ratio);
+					$('#ch').val(c.h * _ratio);
+					$("#cutInfo").text("已选择宽*高：" + (parseInt($('#x2').val()) - parseInt($('#x1').val())) + "*" + (parseInt($('#y2').val()) - parseInt($('#y1').val())));
+				}
+			//ajax文件上传
+			function ajaxFileUpload() {
+				$.ajaxFileUpload({
+						url: '/hello/upload', //用于文件上传的服务器端请求地址
+						secureuri: false, //一般设置为false
+						fileElementId: 'img_poster', //文件上传空间的id属性
+						dataType: 'json', //返回值类型 一般设置为json
+						success: function (data, status){  //服务器成功响应处理函数
+							var result = eval('(' + data + ')' );
+							$("#cutDiv").show();//显示裁剪框						
+							$("#img1").attr("src", result.fileUrl).show(); //显示图片
+							$("#imgName").val(result.fileName);
+							//同时启动裁剪操作，触发裁剪框显示，让用户选择图片区域
+							$('#img1').Jcrop({
+								//aspectRatio: 2 / 1,  //设置比例
+								bgOpacity: .4,     
+								fadeTime: 10,
+								boxWidth: 400,
+								boxHeight: 300,
+								onChange: showCoords,   //当裁剪框变动时执行的函数
+								onSelect: showCoords    //当选择完成时执行的函数);
+							}, function() {
+								 _jcropApi = this;
+								 _jcropApi.focus();
+								 var bounds = this.getBounds();
+								 _boundx = bounds[0];
+								 _boundy = bounds[1];
+								 _jcropApi.animateTo([0, 0, 320, 160]);
+								 _jcropApi.setOptions({allowSelect: false});
+								 _jcropApi.setOptions({
+									minSize: [320, 160]
+								});
+							});
+						},error: function (data, status, e)//服务器响应失败处理函数
+						{
+							alert("系统错误：请检查图片尺寸及大小是否符合要求");
+						}
+					});	
+					return false;
+					
+				}
+			//AJAX上传图片裁剪
+			function ajaxFileCut() {
+				var args ='imgName=' + $("#imgName").val() 
+									+ '&x1='+parseInt($("#x1").val()) 
+									+ "&y1="+parseInt($("#y1").val())
+									+ "&cw="+parseInt($("#cw").val())
+									+ "&ch="+parseInt($("#ch").val());
+			   $.ajax({
+				  type: "post",
+				  url: "/hello/ajaxImageCut?"+args,
+				  datatype: "json",
+				  success: function (data) {
+					alert(data.msg);
+					$("#img_pre").attr("src", data.url).show(); //显示图片
+					document.getElementById('img_url').value = data.url ;
+				  },
+				  error: function (data, status, e)//服务器响应失败处理函数
+				  {
+					 alert(e);
+				  }
+			   });
+			   return false;
+			}
+		</script>
+	</div>
 </div>
 </@layout>
