@@ -9,11 +9,11 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseMclassify<M extends BaseMclassify<M>> extends Model<M> implements IBean {
 
-	public void setMclassifyId(java.lang.String mclassifyId) {
+	public void setMclassifyId(java.lang.Integer mclassifyId) {
 		set("mclassifyId", mclassifyId);
 	}
 
-	public java.lang.String getMclassifyId() {
+	public java.lang.Integer getMclassifyId() {
 		return get("mclassifyId");
 	}
 

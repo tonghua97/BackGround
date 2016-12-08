@@ -73,12 +73,20 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 		return get("userImage");
 	}
 
-	public void setId(java.lang.Integer id) {
-		set("id", id);
+	public void setOpenId(java.lang.Integer openId) {
+		set("openId", openId);
 	}
 
-	public java.lang.Integer getId() {
-		return get("id");
+	public java.lang.Integer getOpenId() {
+		return get("openId");
+	}
+
+	public void setUserSex(java.lang.String userSex) {
+		set("userSex", userSex);
+	}
+
+	public java.lang.String getUserSex() {
+		return get("userSex");
 	}
 
 }

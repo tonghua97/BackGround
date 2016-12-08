@@ -1,0 +1,26 @@
+<#include "/common/_layout.html"/>
+<@layout>
+<h1>拾趣收藏管理&nbsp;&nbsp;
+</h1>
+<div class="table_box">
+	<table class="list">
+		<tbody>
+			<tr>
+				<th width="8%">拾趣收藏编号</th>
+				<th width="20%">用户编号</th>
+				<th width="20%">拾趣编号</th>
+			</tr>
+			
+			<#list testPage.getList() as x>
+			<tr>
+				<td style="text-align:left;">${x.funcollectId}</td>
+				<td style="text-align:left;">${x.funcollectUser}</td>
+				<td style="text-align:left;">${x.FKfunId}</td>
+			</tr>
+			</#list>
+		</tbody>
+	</table>
+	<#include "/common/_paginate.html" />
+	<@paginate currentPage=blogPage.pageNumber totalPage=blogPage.totalPage actionUrl="/test/" />
+</div>
+</@layout>

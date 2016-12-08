@@ -1,6 +1,9 @@
 <fieldset class="solid">
-	<legend>创建主分类</legend>
-	<input type="hidden" name="mclassify.mclassifyId" value="${(mclassify.mclassifyId)!}" />
+	<legend>创建收藏</legend>
+	<div>
+		<label>分类编号</label>
+		<input type="text" name="mclassify.mclassifyId" value="${(mclassify.mclassifyId)!}" />${NameMsg!}
+	</div>
 	<div>
 		<label>分类名称</label>
 		<textarea id="content" name="mclassify.mclassifyName" class="text" cols="80" rows="10">${(mclassify.mclassifyName)!}</textarea>${contentMsg!}

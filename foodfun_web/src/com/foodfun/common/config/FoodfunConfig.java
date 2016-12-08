@@ -5,10 +5,12 @@ import com.foodfun.collect.CollectController;
 import com.foodfun.commend.CommendController;
 import com.foodfun.common.model._MappingKit;
 import com.foodfun.fun.FunController;
+import com.foodfun.funcollect.FuncollectController;
 import com.foodfun.hello.HelloController;
 import com.foodfun.http.HttpController;
 import com.foodfun.index.IndexController;
 import com.foodfun.mclassify.MclassifyController;
+import com.foodfun.openuser.OpenuserController;
 import com.foodfun.recipes.RecipesController;
 import com.foodfun.test.TestController;
 import com.foodfun.user.UserController;
@@ -50,6 +52,8 @@ public class FoodfunConfig extends JFinalConfig{
 		me.add("/user", UserController.class);
 		me.add("/collect", CollectController.class);
 		me.add("/http", HttpController.class);
+		me.add("/openuser", OpenuserController.class);
+		me.add("/funcollect", FuncollectController.class);
 	}
 	
 	public static C3p0Plugin createC3p0Plugin() {

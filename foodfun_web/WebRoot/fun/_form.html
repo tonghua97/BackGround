@@ -1,9 +1,6 @@
 <fieldset class="solid">
 	<legend>创建拾趣</legend>
-	<div>
-		<label>拾趣编号</label>
-		<input type="text" name="fun.funId" value="${(fun.funId)!}" />${NameMsg!}
-	</div>
+	<input type="hidden" name="fun.funId" value="${(fun.funId)!}" />
 	<div>
 		<label>标题</label>
 		<textarea id="content" name="fun.funTitle" class="text" cols="80" rows="1">${(fun.funTitle)!}</textarea>${contentMsg!}
