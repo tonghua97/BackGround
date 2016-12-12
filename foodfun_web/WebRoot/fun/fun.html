@@ -1,34 +1,39 @@
-<#include "/common/_layout.html"/>
+<#include "/common/layout.html"/>
 <@layout>
-<h1>拾趣管理&nbsp;&nbsp;
-<a href="/fun/add">创建拾趣</a>
-</h1>
-<div class="table_box">
-	<table class="list">
-		<tbody>
-			<tr>
-				<th width="4%">拾趣编号</th>
-				<th width="10%">标题</th>
-				<th width="10%">内容</th>
-				<th width="15%">图片</th>
-				<th width="20%">操作</th>
-			</tr>
-			
-			<#list testPage.getList() as x>
-			<tr>
-				<td style="text-align:left;">${x.funId}</td>
-				<td style="text-align:left;">${x.funTitle}</td>
-				<td style="text-align:left;">${x.funContent}</td>
-				<td style="text-align:left;">${x.funImage}</td>
-				<td style="text-align:left;">
-					&nbsp;&nbsp;<a href="/fun/delete/${x.funId}">删除</a>
-					&nbsp;&nbsp;<a href="/fun/edit/${x.funId}">修改</a>
-				</td>
-			</tr>
-			</#list>
-		</tbody>
-	</table>
-	<#include "/common/_paginate.html" />
-	<@paginate currentPage=blogPage.pageNumber totalPage=blogPage.totalPage actionUrl="/test/" />
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<span>拾趣</span>
+	</li>
+	<a href="/fun/add" class="button_add">添加拾趣</a>
+</ol>
+<div>
+	<div class="table_box">
+		<table class="list">
+			<tbody>
+				<tr>
+					<th width="20%">拾趣编号</th>
+					<th width="20%">标题</th>
+					<th width="40%">图片</th>
+					<th width="20%">操作</th>
+				</tr>
+				
+				<#list FunPage.getList() as x>
+				<tr class="border_list">
+					<td>${x.funId}</td>
+					<td>${x.funTitle}</td>
+					<td><img src="${x.funImage}" style="height:160px;width:60%;"/></td>
+					<td>
+						&nbsp;&nbsp;<a href="/fun/edit/${x.funId}"><i class="icon-edit"></i></a>
+						&nbsp;&nbsp;<a href="/fun/delete/${x.funId}"><i class="icon-trash"></i></a>
+					</td>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+		<#include "/common/_paginate.html" />
+		<@paginate currentPage=FunPage.pageNumber totalPage=FunPage.totalPage actionUrl="/fun/" />
+	</div>
 </div>
 </@layout>

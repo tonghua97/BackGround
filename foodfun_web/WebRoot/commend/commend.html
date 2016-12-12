@@ -1,30 +1,35 @@
-<#include "/common/_layout.html"/>
+<#include "/common/layout.html"/>
 <@layout>
-<h1>推荐管理&nbsp;&nbsp;
-<a href="/commend/add">创建推荐</a>
-</h1>
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<span>推荐</span>
+	</li>
+	<a href="/commend/add" class="button_add">添加推荐</a>
+</ol>
 <div class="table_box">
 	<table class="list">
 		<tbody>
 			<tr>
-				<th width="10%">推荐编号</th>
-				<th width="10%">食谱编号</th>
-				<th width="12%">操作</th>
+				<th width="30%">推荐编号</th>
+				<th width="30%">食谱编号</th>
+				<th width="40%">操作</th>
 			</tr>
 			
-			<#list testPage.getList() as x>
-			<tr>
-				<td style="text-align:left;">${x.commendId}</td>
-				<td style="text-align:left;">${x.FKcommendId}</td>
-				<td style="text-align:left;">
-					&nbsp;&nbsp;<a href="/commend/delete/${x.commendId}">删除</a>
-					&nbsp;&nbsp;<a href="/commend/edit/${x.commendId}">修改</a>
+			<#list CommendPage.getList() as x>
+			<tr class="border_list">
+				<td>${x.commendId}</td>
+				<td>${x.FKcommendId}</td>
+				<td>
+					&nbsp;&nbsp;<a href="/commend/edit/${x.commendId}"><i class="icon-edit"></i></a>
+					&nbsp;&nbsp;<a href="/commend/delete/${x.commendId}"><i class="icon-trash"></i></a>
 				</td>
 			</tr>
 			</#list>
 		</tbody>
 	</table>
 	<#include "/common/_paginate.html" />
-	<@paginate currentPage=blogPage.pageNumber totalPage=blogPage.totalPage actionUrl="/test/" />
+	<@paginate currentPage=CommendPage.pageNumber totalPage=CommendPage.totalPage actionUrl="/commend/" />
 </div>
 </@layout>

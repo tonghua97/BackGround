@@ -1,11 +1,10 @@
 <fieldset class="solid">
-	<legend>创建推荐</legend>
 	<input type="hidden" name="commend.commendId" value="${(commend.commendId)!}" />
-	<div>
-		<label>食谱编号</label>
-		<textarea id="content" name="commend.FKcommendId" class="text" cols="80" rows="10">${(commend.FKcommendId)!}</textarea>${contentMsg!}
+	<div class="solid_div" style="width:100%;">
+		<label style="float:left;">食谱编号</label>
+		<textarea id="content" name="commend.FKcommendId" class="text" cols="80" rows="1">${(commend.FKcommendId)!}</textarea>${contentMsg!}
 	</div>
-	<div>
+	<div class="solid_div">
 		<label>&nbsp;</label>
 		<input value="提交" type="submit">
 	</div>
