@@ -1,6 +1,10 @@
 package com.foodfun.http;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,10 +20,12 @@ import com.foodfun.common.model.User;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.json.Json;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.upload.UploadFile;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * BlogController
@@ -544,6 +550,13 @@ public class HttpController extends Controller {
 		}
 	}
 	
+	public void get(){
+		List<Mclassify> list = Mclassify.dao.find("select * from mclassify");
+		JSONArray json = new JSONArray(list);
+		System.out.println(json);
+		renderJson(list);
+	}
+	
 	/**
 	 * 统计数量
 	 */
@@ -555,4 +568,227 @@ public class HttpController extends Controller {
 		System.out.println(string);
 		renderJson(list);
 	}
+	
+	/**
+	 * 得到美食名称及id
+	 */
+	public void getRecipesName2(){
+		List<Recipes> list = Recipes.dao.find("select recipesName from recipes");
+		renderJson(list);
+	}
+	
+	/**
+	 * 按名称搜索
+	 * 参数：名称：recipesName
+	 */
+	public void search(){
+		HttpServletRequest r = getRequest();
+		String recipesName = r.getParameter("recipesName");
+		List<Recipes> list = Recipes.dao.find("select recipesName,recipesId from"
+				+ " recipes");
+		JSONArray json = new JSONArray(list);
+		
+		Map<Integer,Double> map = new TreeMap<>();
+		for (int i = 0; i < json.length(); i++) {
+			JSONObject jsonObject = json.getJSONObject(i);
+			String str = jsonObject.getString("recipesName");
+			double f = SimilarDegree(str,recipesName);
+			map.put(i, f);
+		}
+		
+		List<Recipes> lists = new ArrayList<>();
+		
+		int k = map.size();
+		for (int i = 0; i < k; i++) {
+			int j = getMax(map);
+			lists.add(list.get(j));
+			map.remove(j);
+		}
+		System.out.println(map);
+		renderJson(lists);
+	}
+	
+	public int getMax(Map<Integer,Double> map){
+		int i = 0;
+		double d = 0.0;
+		
+		for (Integer key:map.keySet()) {
+			if(map.get(key) >= d){
+				d = map.get(key);
+				i = key;
+				System.out.println(key);
+			}
+		}
+		return i;
+	}
+	
+	/** 
+    
+     * 相似度比较 
+ 
+     * @param strA 
+ 
+     * @param strB 
+ 
+     * @return 
+ 
+     */  
+  
+    public static double SimilarDegree(String strA, String strB){  
+  
+        String newStrA = removeSign(strA);  
+  
+        String newStrB = removeSign(strB);  
+  
+        int temp = Math.max(newStrA.length(), newStrB.length());  
+  
+        int temp2 = longestCommonSubstring(newStrA, newStrB).length();  
+  
+        return temp2 * 1.0 / temp;  
+  
+    }  
+    
+    private static String removeSign(String str) {  
+  	  
+        StringBuffer sb = new StringBuffer();  
+  
+        for (char item : str.toCharArray())  
+  
+            if (charReg(item)){  
+  
+                //System.out.println("--"+item);  
+  
+                sb.append(item);  
+  
+            }  
+  
+        return sb.toString();  
+  
+    }  
+    
+    private static boolean charReg(char charValue) {  
+    	  
+        return (charValue >= 0x4E00 && charValue <= 0X9FA5)  
+  
+                || (charValue >= 'a' && charValue <= 'z')  
+  
+                || (charValue >= 'A' && charValue <= 'Z')  
+  
+                || (charValue >= '0' && charValue <= '9');  
+  
+    }  
+  
+  
+  
+    private static String longestCommonSubstring(String strA, String strB) {  
+  
+        char[] chars_strA = strA.toCharArray();  
+  
+        char[] chars_strB = strB.toCharArray();  
+  
+        if (chars_strA.length >= chars_strB.length) {
+			int m = chars_strA.length;  
+			int n = chars_strB.length; 
+
+			int[][] matrix = new int[m + 1][n + 1];  
+			  
+	        for (int i = 1; i <= m; i++) {  
+	  
+	            for (int j = 1; j <= n; j++) {  
+	  
+	                if (chars_strA[i - 1] == chars_strB[j - 1])  
+	  
+	                    matrix[i][j] = matrix[i - 1][j - 1] + 1;  
+	  
+	                else  
+	  
+	                    matrix[i][j] = Math.max(matrix[i][j - 1], matrix[i - 1][j]);  
+	  
+	            }  
+	  
+	        }  
+	  
+	        char[] result = new char[matrix[m][n]];  
+	  
+	        int currentIndex = result.length - 1;  
+	  
+	        while (matrix[m][n] != 0) {  
+	  
+	            if (matrix[n] == matrix[n - 1])  
+	  
+	                n--;  
+	  
+	            else if (matrix[m][n] == matrix[m - 1][n])   
+	  
+	                m--;  
+	  
+	            else {  
+	  
+	                result[currentIndex] = chars_strA[m - 1];  
+	  
+	                currentIndex--;  
+	  
+	                n--;  
+	  
+	                m--;  
+	  
+	            }  
+	        }  
+	        
+	        System.out.println(new String(result));
+	        return new String(result); 
+		}else{
+			int n = chars_strA.length;  
+			int m = chars_strB.length; 
+
+			int[][] matrix = new int[m + 1][n + 1];  
+			  
+	        for (int i = 1; i <= m; i++) {  
+	  
+	            for (int j = 1; j <= n; j++) {  
+	  
+	                if (chars_strB[i - 1] == chars_strA[j - 1])  
+	  
+	                    matrix[i][j] = matrix[i - 1][j - 1] + 1;  
+	  
+	                else  
+	  
+	                    matrix[i][j] = Math.max(matrix[i][j - 1], matrix[i - 1][j]);  
+	  
+	            }  
+	  
+	        }  
+	  
+	        char[] result = new char[matrix[m][n]];  
+	  
+	        int currentIndex = result.length - 1;  
+	  
+	        while (matrix[m][n] != 0) {  
+	  
+	            if (matrix[n] == matrix[n - 1])  
+	  
+	                n--;  
+	  
+	            else if (matrix[m][n] == matrix[m - 1][n])   
+	  
+	                m--;  
+	  
+	            else {  
+	  
+	                result[currentIndex] = chars_strB[m - 1];  
+	  
+	                currentIndex--;  
+	  
+	                n--;  
+	  
+	                m--;  
+	  
+	            }  
+	        }  
+	        
+	        System.out.println(new String(result));
+	        return new String(result); 
+		} 
+  
+    }  
 }
