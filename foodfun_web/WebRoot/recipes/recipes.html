@@ -10,32 +10,33 @@
 </ol>
 <div>
 	<div class="table_box">
-	<table class="list" >
-		<tbody>
-			<tr>
-				<th width="15%">食谱编号</th>
-				<th width="15%">食谱名称</th>
-				<th width="30%">图片</th>
-				<th width="20%">收藏数量</th>				
-				<th width="20%">操作</th>
-			</tr>
-			<#list recipesPage.getList() as x>
-			<tr class="border_list">
-				<td>${x.recipesId}</td>
-				<td>${x.recipesName}</td>
-				<td><img src="${x.recipesImage}" style="height:105px;width:60%;"/></td>			
-				<td>${x.recipesCollect}</td>
-				<td>
-					<a href="" title="详情"><i class="icon-inbox"></i></a>
-					&nbsp;&nbsp;<a href="" title="添加至推荐"><i class="icon-bookmark-empty"></i></a>
-					&nbsp;&nbsp;<a href="/recipes/edit/${x.recipesId}" title="编辑"><i class="icon-edit"></i></a>
-					&nbsp;<a href="/recipes/delete/${x.recipesId}" title="删除"><i class="icon-trash"></i></a>
-				</td>
-			</tr>
-			</#list>
-		</tbody>
-	</table>
-	<#include "/common/_paginate.html" />
-	<@paginate currentPage=recipesPage.pageNumber totalPage=recipesPage.totalPage actionUrl="/recipes/" />
+		<table class="list" >
+			<tbody>
+				<tr>
+					<th width="15%">食谱编号</th>
+					<th width="15%">食谱名称</th>
+					<th width="30%">图片</th>
+					<th width="20%">收藏数量</th>				
+					<th width="20%">操作</th>
+				</tr>
+				<#list recipesPage.getList() as x>
+				<tr class="border_list">
+					<td>${x.recipesId}</td>
+					<td>${x.recipesName}</td>
+					<td><img src="${x.recipesImage}" style="height:105px;width:60%;"/></td>			
+					<td>${x.recipesCollect}</td>
+					<td>
+						<a href="" title="详情"><i class="icon-inbox"></i></a>
+						&nbsp;&nbsp;<a href="" title="添加至推荐"><i class="icon-bookmark-empty"></i></a>
+						&nbsp;&nbsp;<a href="/recipes/edit/${x.recipesId}" title="编辑"><i class="icon-edit"></i></a>
+						&nbsp;<a href="/recipes/delete/${x.recipesId}" title="删除"><i class="icon-trash"></i></a>
+					</td>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+		<#include "/common/_paginate.html" />
+		<@paginate currentPage=recipesPage.pageNumber totalPage=recipesPage.totalPage actionUrl="/recipes/" />
+	</div>
 </div>
 </@layout>

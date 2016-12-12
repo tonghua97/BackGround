@@ -1,43 +1,47 @@
-<#include "/common/_layout.html"/>
+<#include "/common/layout.html"/>
 <@layout>
-<h1>用户管理&nbsp;&nbsp;
-</h1>
-<div class="table_box">
-	<table class="list">
-		<tbody>
-			<tr>
-				<th width="5%">用户编号</th>
-				<th width="10%">账号</th>
-				<th width="10%">密码</th>
-				<th width="10%">昵称</th>
-				<th width="10%">性别</th>
-				<th width="10%">邮箱</th>
-				<th width="10%">手机号</th>
-				<th width="4%">收藏数量</th>
-				<th width="20%">图片</th>
-				<!-- <th width="12%">操作</th> -->
-			</tr>
-			
-			<#list testPage.getList() as x>
-			<tr>
-				<td style="text-align:left;">${x.userId}</td>
-				<td style="text-align:left;">${x.userAccount}</td>
-				<td style="text-align:left;">${x.userPassword}</td>
-				<td style="text-align:left;">${x.userName}</td>
-				<td style="text-align:left;">${x.userSex}</td>
-				<td style="text-align:left;">${x.userPost}</td>
-				<td style="text-align:left;">${x.userNum}</td>
-				<td style="text-align:left;">${x.userCollect}</td>
-				<td style="text-align:left;">${x.userImage}</td>
-				<!-- <td style="text-align:left;">
-					&nbsp;&nbsp;<a href="/user/delete/${x.userId}">删除</a>
-					&nbsp;&nbsp;<a href="/user/edit/${x.userId}">修改</a>
-				</td> -->
-			</tr>
-			</#list>
-		</tbody>
-	</table>
-	<#include "/common/_paginate.html" />
-	<@paginate currentPage=blogPage.pageNumber totalPage=blogPage.totalPage actionUrl="/test/" />
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<span>用户管理</span>
+	</li>
+</ol>
+<div>
+	<div class="table_box">
+		<table class="list">
+			<tbody>
+				<tr>
+					<th width="10%">用户编号</th>
+					<th width="10%">账号</th>
+					<th width="25%">图片</th>
+					<!-- <th width="10%">密码</th> -->
+					<th width="10%">昵称</th>
+					<th width="10%">性别</th>
+					<th width="10%">邮箱</th>
+					<th width="10%">手机号</th>
+					<th width="15%">收藏数量</th>
+					
+					<!-- <th width="12%">操作</th> -->
+				</tr>
+				
+				<#list UserPage.getList() as x>
+				<tr class="border_list">
+					<td>${x.userId}</td>
+					<td>${x.userAccount}</td>
+					<td><img src="${x.userImage}" style="height:100px;width:40%;"/></td>
+					<!-- <td>${x.userPassword}</td> -->
+					<td>${x.userName}</td>
+					<td>${x.userSex}</td>
+					<td>${x.userPost}</td>
+					<td>${x.userNum}</td>
+					<td>${x.userCollect}</td>			
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+		<#include "/common/_paginate.html" />
+		<@paginate currentPage=UserPage.pageNumber totalPage=UserPage.totalPage actionUrl="/user/" />
+	</div>
 </div>
 </@layout>

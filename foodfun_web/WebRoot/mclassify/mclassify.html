@@ -1,32 +1,39 @@
-<#include "/common/_layout.html"/>
+<#include "/common/layout.html"/>
 <@layout>
-<h1>主分类管理&nbsp;&nbsp;
-<a href="/mclassify/add">创建主分类</a>
-</h1>
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<a href="/recipes">食谱</a>
+		<i class="icon-angle-right"></i>
+		<span>主分类</span>
+	</li>
+	<a href="/mclassify/add" class="button_add">添加主分类</a>
+</ol>
+<div>
 <div class="table_box">
 	<table class="list">
 		<tbody>
 			<tr>
-				<th width="8%">分类编号</th>
-				<th width="20%">分类名称</th>
-				<!-- <th width="30%">内容</th>
-				<th width="10%">图片</th> -->
-				<th width="12%">操作</th>
+				<th width="30%">分类编号</th>
+				<th width="30%">分类名称</th>
+				<th width="40%">操作</th>
 			</tr>
 			
-			<#list testPage.getList() as x>
-			<tr>
-				<td style="text-align:left;">${x.mclassifyId}</td>
-				<td style="text-align:left;">${x.mclassifyName}</td>
-				<td style="text-align:left;">
-					&nbsp;&nbsp;<a href="/mclassify/delete/${x.mclassifyId}">删除</a>
-					&nbsp;&nbsp;<a href="/mclassify/edit/${x.mclassifyId}">修改</a>
+			<#list mclassifyPage.getList() as x>
+			<tr class="border_list">
+				<td>${x.mclassifyId}</td>
+				<td>${x.mclassifyName}</td>
+				<td>
+					&nbsp;&nbsp;<a href="/mclassify/edit/${x.mclassifyId}" title="编辑"><i class="icon-edit"></i></a>
+					&nbsp;<a href="/mclassify/delete/${x.mclassifyId}" title="删除"><i class="icon-trash"></i></a>
 				</td>
 			</tr>
 			</#list>
 		</tbody>
 	</table>
 	<#include "/common/_paginate.html" />
-	<@paginate currentPage=testPage.pageNumber totalPage=testPage.totalPage actionUrl="/mclassify/" />
+	<@paginate currentPage=mclassifyPage.pageNumber totalPage=mclassifyPage.totalPage actionUrl="/mclassify/" />
+</div>
 </div>
 </@layout>

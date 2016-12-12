@@ -1,34 +1,41 @@
-<#include "/common/_layout.html"/>
+<#include "/common/layout.html"/>
 <@layout>
-<h1>分类管理&nbsp;&nbsp;
-<a href="/classify/add">创建分类</a>
-</h1>
-<div class="table_box">
-	<table class="list">
-		<tbody>
-			<tr>
-				<th width="8%">分类编号</th>
-				<th width="20%">分类名称</th>
-				<th width="20%">分类图标</th>
-				<th width="20%">主分类编号</th>
-				<th width="12%">操作</th>
-			</tr>
-			
-			<#list testPage.getList() as x>
-			<tr>
-				<td style="text-align:left;">${x.classifyId}</td>
-				<td style="text-align:left;">${x.classifyName}</td>
-				<td style="text-align:left;">${x.classifyImage}</td>
-				<td style="text-align:left;">${x.FKclassifyId}</td>
-				<td style="text-align:left;">
-					&nbsp;&nbsp;<a href="/classify/delete/${x.classifyId}">删除</a>
-					&nbsp;&nbsp;<a href="/classify/edit/${x.classifyId}">修改</a>
-				</td>
-			</tr>
-			</#list>
-		</tbody>
-	</table>
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<a href="/recipes">食谱</a>
+		<i class="icon-angle-right"></i>
+		<span>分类</span>
+	</li>
+	<a href="/classify/add" class="button_add">添加分类</a>
+</ol>
+<div>
+	<div class="table_box">
+		<table class="list">
+			<tbody>
+				<tr>
+					<th width="20%">分类编号</th>
+					<th width="20%">分类名称</th>
+					<th width="20%">主分类编号</th>
+					<th width="40%">操作</th>
+				</tr>
+				
+				<#list ClassifyPage.getList() as x>
+				<tr class="border_list">
+					<td>${x.classifyId}</td>
+					<td>${x.classifyName}</td>
+					<td>${x.FKclassifyId}</td>
+					<td>
+						&nbsp;&nbsp;<a href="/classify/edit/${x.classifyId}"><i class="icon-edit"></i></a>
+						&nbsp;&nbsp;<a href="/classify/delete/${x.classifyId}"><i class="icon-trash"></i></a>
+					</td>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
 	<#include "/common/_paginate.html" />
-	<@paginate currentPage=testPage.pageNumber totalPage=testPage.totalPage actionUrl="/classify/" />
+	<@paginate currentPage=ClassifyPage.pageNumber totalPage=ClassifyPage.totalPage actionUrl="/classify/" />
+	</div>
 </div>
 </@layout>

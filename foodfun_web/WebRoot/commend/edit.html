@@ -1,7 +1,15 @@
-<#include "/common/_layout.html" />
+<#include "/common/layout.html" />
 <@layout>
-<h1>推荐管理 ---&gt; 修改推荐
-</h1>
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<a href="/commend">推荐</a>
+		<i class="icon-angle-right"></i>
+		<span>修改推荐</span>
+	</li>
+	<a href="/commend/add" class="button_add">添加推荐</a>
+</ol>
 <div class="form_box">
 	<form action="/commend/update" method="post">
 		<#include "_form.html" />

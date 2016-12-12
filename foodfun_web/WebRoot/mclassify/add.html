@@ -1,10 +1,21 @@
-<#include "/common/_layout.html" />
+<#include "/common/layout.html" />
 <@layout>
-<h1>主分类管理 ---&gt; 创建主分类
-</h1>
-<div class="form_box">
-	<form action="/mclassify/save" method="post">
-		<#include "_form.html" />
-	</form>
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<a href="/recipes">食谱</a>
+		<i class="icon-angle-right"></i>
+		<a href="/mclassify">主分类</a>
+		<i class="icon-angle-right"></i>
+		<span>添加主分类</span>
+	</li>
+</ol>
+<div>
+	<div class="form_box">
+		<form action="/mclassify/save" method="post">
+			<#include "_form.html" />
+		</form>
+	</div>
 </div>
 </@layout>

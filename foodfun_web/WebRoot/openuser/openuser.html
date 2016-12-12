@@ -1,26 +1,33 @@
-<#include "/common/_layout.html"/>
+<#include "/common/layout.html"/>
 <@layout>
-<h1>第三方登录管理&nbsp;&nbsp;
-</h1>
-<div class="table_box">
-	<table class="list">
-		<tbody>
-			<tr>
-				<th width="8%">id</th>
-				<th width="8%">第三方登录标识</th>
-				<th width="20%">昵称</th>
-			</tr>
-			
-			<#list testPage.getList() as x>
-			<tr>
-				<td style="text-align:left;">${x.id}</td>
-				<td style="text-align:left;">${x.openId}</td>
-				<td style="text-align:left;">${x.nickname}</td>
-			</tr>
-			</#list>
-		</tbody>
-	</table>
-	<#include "/common/_paginate.html" />
-	<@paginate currentPage=blogPage.pageNumber totalPage=blogPage.totalPage actionUrl="/test/" />
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="/">首页</a>
+		<i class="icon-angle-right"></i>
+		<span>第三方用户管理</span>
+	</li>
+</ol>
+<div>
+	<div class="table_box">
+		<table class="list">
+			<tbody>
+				<tr>
+					<th width="8%">id</th>
+					<th width="8%">第三方登录标识</th>
+					<th width="20%">昵称</th>
+				</tr>
+				
+				<#list OpenuserPage.getList() as x>
+				<tr class="border_list">
+					<td>${x.id}</td>
+					<td>${x.openId}</td>
+					<td>${x.nickname}</td>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+		<#include "/common/_paginate.html" />
+		<@paginate currentPage=OpenuserPage.pageNumber totalPage=OpenuserPage.totalPage actionUrl="/openuser/" />
+	</div>
 </div>
 </@layout>

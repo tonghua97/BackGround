@@ -1,20 +1,41 @@
 <fieldset class="solid">
-	<legend>创建拾趣</legend>
+	<div id="image_show">
+		<b>图片预览</b><br/>
+		<div style="float:right;">
+			<b>拾趣图片</b><br/><br/>
+			<img id="img_pre" src="${(recipes.recipesImage)!}" style="width:250px;"/>
+		</div>		
+		<input type="file" name="img_poster" id="img_poster" onchange="ajaxFileUpload()"/>
+		<div class="cutDiv">
+			<p id="cutInfo"></p>
+			<img id="img1" alt="" src=""/>
+			<input type="hidden" id="x1" name="x1" value="0" />
+			<input type="hidden" id="y1" name="y1" value="0" />
+			<input type="hidden" id="x2" name="x2" value="0" />
+			<input type="hidden" id="y2" name="y2" value="0" />
+			<input type="hidden" id="cw" name="cw" value="0" />
+			<input type="hidden" id="ch" name="ch" value="0" />
+			<input type="hidden" id="imgName" name="imgName" value="" />
+			<input type="hidden" id="imgType" name="imgType" value="" />
+		</div>
+			<input id="cutimg" type="button" value="裁剪上传" />
+			<input id="cancelimg" type="button" value="取消" />
+	</div>
 	<input type="hidden" name="fun.funId" value="${(fun.funId)!}" />
-	<div>
-		<label>标题</label>
-		<textarea id="content" name="fun.funTitle" class="text" cols="80" rows="1">${(fun.funTitle)!}</textarea>${contentMsg!}
+	<div class="solid_div">
+		<label style="float:left;">标题</label>
+		<input type="text" name="fun.funTitle" value="${(fun.funTitle)!}" />${funTitleMsg!}
 	</div>
-	<div>
-		<label>内容</label>
+	<div class="solid_div">
+		<label style="float:left;">图片url</label>
+		<input type="text" id="img_url" name="fun.funImage" value="${(fun.funImage)!}" />${funImageMsg!}
+	</div>
+	<div class="solid_div" style="width:100%">
+		<label style="float:left;">内容</label>
 		<textarea id="content" name="fun.funContent" class="text" cols="80" rows="5">${(fun.funContent)!}</textarea>${contentMsg!}
-	</div>
-	<div>
-		<label>图片url</label>
-		<textarea id="imageUrl" name="fun.funImage" class="text">${(fun.funImage)!}</textarea>${contentMsg!}
-	</div>
-	<div>
-		<label>&nbsp;</label>
+	</div>	
+	<div class="solid_div" style="width:100%">
+		<label style="float:left;">&nbsp;</label>
 		<input value="提交" type="submit">
 	</div>
 </fieldset>

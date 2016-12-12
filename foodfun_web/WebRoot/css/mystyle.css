@@ -10,6 +10,9 @@
 	padding-left:30px;
 	padding-right:30px;
 }
+.list{
+	width:100%;
+}
 .list tbody tr th{
 	text-align:center;
 	padding-bottom:5px;
