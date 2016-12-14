@@ -37,7 +37,7 @@ public class HttpController extends Controller {
 	 * 获取推荐的名称和简介及美食id,图片
 	 */
 	public void getCommend(){
-		List<Recipes> list = Recipes.dao.find("select recipesIntro,recipesName,recipesId,recipesImage from recipes,commend "
+		List<Recipes> list = Recipes.dao.find("select commend.commendId,recipesIntro,recipesName,recipesId,recipesImage from recipes,commend "
 				+ "where commend.FKcommendId = recipes.recipesId");
 		
 		//返回推荐名称、简介及食谱id的json串
@@ -577,35 +577,113 @@ public class HttpController extends Controller {
 		renderJson(list);
 	}
 	
+	public void set(){
+		String url = "http://127.0.0.1:80/http/getCommend";
+		String string = url.substring(7, url.indexOf("/", 7));
+		url = url.replaceAll(string, "10.7.88.80");
+		String u = url.replaceAll(string, "10.7.88.80");
+		u = u.substring(u.lastIndexOf("/")-5, u.lastIndexOf("/"));
+		url = url.replaceAll(u, "");
+		renderText(url);
+	}
+	
 	/**
 	 * 按名称搜索
 	 * 参数：名称：recipesName
 	 */
-	public void search(){
+	public void searchByRecipesName(){
 		HttpServletRequest r = getRequest();
 		String recipesName = r.getParameter("recipesName");
-		List<Recipes> list = Recipes.dao.find("select recipesName,recipesId from"
-				+ " recipes");
-		JSONArray json = new JSONArray(list);
-		
-		Map<Integer,Double> map = new TreeMap<>();
-		for (int i = 0; i < json.length(); i++) {
-			JSONObject jsonObject = json.getJSONObject(i);
-			String str = jsonObject.getString("recipesName");
-			double f = SimilarDegree(str,recipesName);
-			map.put(i, f);
+		if (recipesName == "") {
+			renderText("");
+			return;
+		}else{
+			List<Recipes> list = Recipes.dao.find("select recipesName,recipesId from"
+					+ " recipes");
+			JSONArray json = new JSONArray(list);
+			
+			Map<Integer,Double> map = new TreeMap<>();
+			for (int i = 0; i < json.length(); i++) {
+				JSONObject jsonObject = json.getJSONObject(i);
+				String str = jsonObject.getString("recipesName");
+				double f = SimilarDegree(str,recipesName);
+				map.put(i, f);
+			}
+			
+			List<Recipes> lists = new ArrayList<>();
+			
+			int k = map.size();
+			for (int i = 0; i < k; i++) {
+				int j = getMax(map);
+//				lists.add(list.get(j));
+				if(map.get(j) != 0){
+					lists.add(list.get(j));
+				}
+				map.remove(j);
+			}
+			System.out.println(map);
+			renderJson(lists);
 		}
 		
-		List<Recipes> lists = new ArrayList<>();
+	}
+	
+	/**
+	 * 按食材搜索
+	 * 参数：主料：recipesMfood
+	 */
+	public void searchByRecipesMfood(){
+		HttpServletRequest r = getRequest();
+		String recipesMfood = r.getParameter("recipesMfood");
 		
-		int k = map.size();
-		for (int i = 0; i < k; i++) {
-			int j = getMax(map);
-			lists.add(list.get(j));
-			map.remove(j);
+		if (recipesMfood == "") {
+			renderText("");
+			return;
+		}else{
+			List<Recipes> list = Recipes.dao.find("select recipesName,recipesMfood,recipesId from"
+					+ " recipes");
+			JSONArray json = new JSONArray(list);
+			
+			Map<Integer,Double> map = new TreeMap<>();
+			for (int i = 0; i < json.length(); i++) {
+				JSONObject jsonObject = json.getJSONObject(i);
+				String str = jsonObject.getString("recipesMfood");
+				double f = SimilarDegree(str,recipesMfood);
+				map.put(i, f);
+			}
+			
+			List<Recipes> lists = new ArrayList<>();
+			
+			int k = map.size();
+			for (int i = 0; i < k; i++) {
+				int j = getMax(map);
+//				lists.add(list.get(j));
+				if(map.get(j) != 0){
+					lists.add(list.get(j));
+				}
+				map.remove(j);
+			}
+			System.out.println(map);
+			renderJson(lists);
 		}
-		System.out.println(map);
-		renderJson(lists);
+	}
+	
+	/**
+	 * 按食材搜索
+	 * 参数：时间：recipesTime
+	 */
+	public void searchByRecipesTime(){
+		HttpServletRequest r = getRequest();
+		String recipesTime = r.getParameter("recipesTime");
+		
+		if (recipesTime == "") {
+			renderText("");
+			return;
+		}else{
+			List<Recipes> list = Recipes.dao.find("select recipesName,recipesTime,recipesId from"
+					+ " recipes where recipesTime <=" + "\"" + recipesTime + "\""
+					+ " order by recipesTime asc");
+			renderJson(list);
+		}
 	}
 	
 	public int getMax(Map<Integer,Double> map){
