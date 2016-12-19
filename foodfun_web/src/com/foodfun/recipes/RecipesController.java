@@ -21,7 +21,7 @@ import com.jfinal.upload.UploadFile;
 //@Before(BlogInterceptor.class)
 public class RecipesController extends Controller {
 	public void index() {
-		setAttr("recipesPage", Recipes.dao.paginate(getParaToInt(0, 1), 10));
+		setAttr("recipesPage", Recipes.dao.paginate(getParaToInt(0, 1), 3));
 		render("recipes.html");
 	}
 

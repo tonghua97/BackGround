@@ -45,10 +45,10 @@ public class HttpController extends Controller {
 	}
 	
 	/**
-	 * 获得拾趣的标题
+	 * 获得拾趣的标题，图片
 	 */
 	public void getFunTitle(){
-		List<Fun> list = Fun.dao.find("select funTitle,funImage from fun");
+		List<Fun> list = Fun.dao.find("select funId,funTitle,funImage from fun");
 		
 		//返回拾趣标题与图片集合的json串
 		renderJson(list);
@@ -58,7 +58,7 @@ public class HttpController extends Controller {
 	 * 获得美食名称及收藏数量
 	 */
 	public void getRecipesName(){
-		List<Recipes> list = Recipes.dao.find("select recipesName,recipesCollect from recipes "
+		List<Recipes> list = Recipes.dao.find("select recipesName,recipesCollect,recipesId,recipesImage from recipes "
 				+ "order by recipesCollect desc");
 		
 		//返回食谱名称及收藏数量集合的json串
@@ -72,8 +72,11 @@ public class HttpController extends Controller {
 	public void getRecipesById(){
 		HttpServletRequest r = getRequest();
 		String recipesId = r.getParameter("recipesId");
-		List<Recipes> list = Recipes.dao.find("select * from recipes where "
-				 + "recipesId=" + "\"" + recipesId + "\"");
+		List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesMfood,recipesFood,recipesLevel,recipesIntro,recipesTime,recipesStep,recipesCollect,recipesImage,recipesEffect,classify.classifyName"
+				+ " from recipes"
+				+ " join classify on (recipes.FKrecipesTaste = classify.classifyId)"
+				+ " where recipesId=" + "\"" + recipesId + "\"");
+
 		
 		//食谱详情的json串
 		renderJson(list);
@@ -114,6 +117,7 @@ public class HttpController extends Controller {
 	public void getFunById(){
 		HttpServletRequest r = getRequest();
 		String funId = r.getParameter("funId");
+//		String funId = "1";
 		List<Fun> list = Fun.dao.find("select * from fun where "
 				+ "funId=" + "\"" + funId + "\"");
 		
@@ -149,32 +153,45 @@ public class HttpController extends Controller {
 //	}
 	
 	/**
-	 * 根据分类的id获取美食的列表
-	 * 参数：分类id：classifyId 
+	 * 根据美食id获取美食的列表
+	 * 参数：美食id：recipesId
 	 * 返回值：食谱的id，名称，时间，收藏数量，简介，图片
 	 */
-	public void getClassifyListById(){ 
+//	public void getRecipesListById(){
+//		HttpServletRequest r = getRequest();
+//		String recipesId = r.getParameter("classifyName");
+//		List<Recipes> type = Recipes.dao.find("select FKclassifyId,classifyId from "
+//				+ "classify where classifyName=" + "\"" + classifyName + "\"");
+//	}
+	
+	/**
+	 * 根据分类的名称获取美食的列表
+	 * 参数：分类id：classifyName
+	 * 返回值：食谱的id，名称，时间，收藏数量，简介，图片
+	 */
+	public void getClassifyListByName(){ 
 		HttpServletRequest r = getRequest();
-		String classifyId = r.getParameter("classifyId");
-		Classify type = Classify.dao.findFirst("select FKclassifyId from "
-				+ "classify where classifyId=" + "\"" + classifyId + "\"");
-		String str = type.toString();
-		String string = str.substring(str.indexOf(":")+1, str.lastIndexOf("}"));
+		String classifyName = r.getParameter("classifyName");
+		List<Classify> type = Classify.dao.find("select FKclassifyId,classifyId from "
+				+ "classify where classifyName=" + "\"" + classifyName + "\"");
+		JSONArray json = new JSONArray(type);
+		int FKID = json.getJSONObject(0).getInt("FKclassifyId");
+		int classifyId = json.getJSONObject(0).getInt("classifyId");
 		
-		if (string.equals("5")) {
+		if (FKID == 5) {
 			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesType="
 					+ "\"" + classifyId + "\"";
 			List<Recipes> list = Recipes.dao.find(sql);
 			renderJson(list);
 		}
-		if (string.equals("6")) {
-			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesType="
+		if (FKID == 6) {
+			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesEffect="
 					+ "\"" + classifyId + "\"";
 			List<Recipes> list = Recipes.dao.find(sql);
 			renderJson(list);
 		}
-		if (string.equals("6")) {
-			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesType="
+		if (FKID == 7) {
+			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesTaste="
 					+ "\"" + classifyId + "\"";
 			List<Recipes> list = Recipes.dao.find(sql);
 			renderJson(list);
@@ -190,19 +207,42 @@ public class HttpController extends Controller {
 		String userPassword = r.getParameter("userPassword");
 		
 		User user = User.dao.findFirst("select * from user where"
-				+ "userAccount=" + "\"" + userAccount + "\"");
+				+ " userAccount=" + "\"" + userAccount + "\"");
 		if(user != null){
-			User user2 = User.dao.findFirst("select userId,userImage from user where"
-					+ "userAccount=" + "\"" + userAccount + "\"" 
-					+ "userPassword=" + "\"" + userPassword + "\"");
+			User user2 = User.dao.findFirst("select userId from user where"
+					+ " userAccount=" + "\"" + userAccount + "\"" 
+					+ " and userPassword=" + "\"" + userPassword + "\"");
 			if(user2 != null){
 				//返回用户的id及头像
 				renderJson(user2);
 			}else{
+				//密码不正确
 				renderText("2");
 			}
 		}else{
+			//账号不存在
 			renderText("0");
+		}
+	}
+	
+	/**
+	 * 根据用户id获取用户信息
+	 * 参数：id：userId
+	 */
+	public void getUser(){
+		HttpServletRequest r = getRequest();
+		String userId = r.getParameter("userId");
+		
+//		String userId = "3";		
+		User user = User.dao.findFirst("select * from user where"
+				+ " userId=" + "\"" + userId + "\"");
+		
+		if(user == null){
+			//错误
+			renderText("0");
+		}else{
+			//用户信息
+			renderJson(user);
 		}
 	}
 	
@@ -224,8 +264,10 @@ public class HttpController extends Controller {
 		User uNum = User.dao.findFirst("select * from user where "
 				+ "userNum=" + "\"" + userNum + "\"");
 		if (uAccount != null) {
+			//账号已存在
 			renderText("0");
 		}else if(uNum != null){
+			//手机号已经使用
 			renderText("1");
 		}else{
 			User user = new User();
@@ -244,6 +286,24 @@ public class HttpController extends Controller {
 				//注册失败
 				renderText("3");
 			}
+		}
+	}
+	
+	/**
+	 * 判断账号是否存在
+	 */
+	public void isUserAccount(){
+		HttpServletRequest r = getRequest();
+		String userAccount = r.getParameter("userAccount");
+		User uAccount = User.dao.findFirst("select * from user where "
+				+ "userAccount=" + "\"" + userAccount + "\"");
+		
+		if (uAccount != null) {
+			//账号已存在
+			renderText("0");
+		}else{
+			//账号不存在
+			renderText("1");
 		}
 	}
 	
