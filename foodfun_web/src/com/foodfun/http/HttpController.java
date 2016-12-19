@@ -22,6 +22,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.json.Json;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.upload.UploadFile;
 
@@ -38,11 +39,22 @@ public class HttpController extends Controller {
 	 * 获取推荐的名称和简介及美食id,图片
 	 */
 	public void getCommend(){
-		List<Recipes> list = Recipes.dao.find("select commend.commendId,recipesIntro,recipesName,recipesId,recipesImage from recipes,commend "
-				+ "where commend.FKcommendId = recipes.recipesId");
+		String number = getPara("num");
+		int num = Integer.parseInt(number);
 		
+		String sql = "select commend.commendId,recipesIntro,recipesName,recipesId,recipesImage from recipes,commend "
+				+ "where commend.FKcommendId = recipes.recipesId";
+		
+		Page<Recipes> pageRecipes = Recipes.dao.paginate(num, 4, 
+				"select commend.commendId,recipesIntro,recipesName,recipesId,recipesImage",
+				"from recipes,commend where commend.FKcommendId = recipes.recipesId");
+		//List<Recipes> list = Recipes.dao.find(sql);
+		List<Recipes> list = pageRecipes.getList();
+		
+		setAttr("totalPage", pageRecipes.getTotalPage());
+		setAttr("Recipes",list);
 		//返回推荐名称、简介及食谱id的json串
-		renderJson(list);
+		renderJson();
 	}
 	
 	/**

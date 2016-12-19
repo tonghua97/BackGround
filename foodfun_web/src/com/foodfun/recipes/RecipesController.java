@@ -12,6 +12,7 @@ import com.foodfun.utils.CutImage;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.PathKit;
+import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.render.JsonRender;
 import com.jfinal.upload.UploadFile;
 
@@ -24,7 +25,7 @@ public class RecipesController extends Controller {
 		setAttr("recipesPage", Recipes.dao.paginate(getParaToInt(0, 1), 10));
 		render("recipes.html");
 	}
-
+	
 	public void add() {
 		
 	}
