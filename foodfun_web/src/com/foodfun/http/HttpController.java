@@ -20,6 +20,7 @@ import com.foodfun.common.model.User;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.json.Json;
+import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.upload.UploadFile;
@@ -72,10 +73,13 @@ public class HttpController extends Controller {
 	public void getRecipesById(){
 		HttpServletRequest r = getRequest();
 		String recipesId = r.getParameter("recipesId");
-		List<Recipes> list = Recipes.dao.find("select * from recipes where "
-				 + "recipesId=" + "\"" + recipesId + "\"");
-		
+		List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesMfood,recipesFood,recipesLevel,recipesIntro,recipesTime,recipesStep,recipesCollect,recipesImage,recipesEffect,classify.classifyName"
+				+ " from recipes"
+				+ " join classify on (recipes.FKrecipesTaste = classify.classifyId)"
+				+ " where recipesId=" + "\"" + recipesId + "\"");
+		//Ret ret = Ret.create("Recipes",list);
 		//食谱详情的json串
+		//renderJson(ret.getData());
 		renderJson(list);
 	}
 	
