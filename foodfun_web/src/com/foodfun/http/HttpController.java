@@ -20,6 +20,7 @@ import com.foodfun.common.model.User;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.json.Json;
+import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.upload.UploadFile;
@@ -76,9 +77,9 @@ public class HttpController extends Controller {
 				+ " from recipes"
 				+ " join classify on (recipes.FKrecipesTaste = classify.classifyId)"
 				+ " where recipesId=" + "\"" + recipesId + "\"");
-
-		
+		//Ret ret = Ret.create("Recipes",list);
 		//食谱详情的json串
+		//renderJson(ret.getData());
 		renderJson(list);
 	}
 	
@@ -651,6 +652,47 @@ public class HttpController extends Controller {
 	 * 按名称搜索
 	 * 参数：名称：recipesName
 	 */
+	public void searchShowByRecipesName(){
+		HttpServletRequest r = getRequest();
+		String recipesName = r.getParameter("recipesName");
+//		String recipesName = "新疆大盘肚";
+		if (recipesName == "") {
+			renderText("");
+			return;
+		}else{
+			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from"
+					+ " recipes");
+			JSONArray json = new JSONArray(list);
+			
+			Map<Integer,Double> map = new TreeMap<>();
+			for (int i = 0; i < json.length(); i++) {
+				JSONObject jsonObject = json.getJSONObject(i);
+				String str = jsonObject.getString("recipesName");
+				double f = SimilarDegree(str,recipesName);
+				map.put(i, f);
+			}
+			
+			List<Recipes> lists = new ArrayList<>();
+			
+			int k = map.size();
+			for (int i = 0; i < k; i++) {
+				int j = getMax(map);
+//				lists.add(list.get(j));
+				if(map.get(j) != 0){
+					lists.add(list.get(j));
+				}
+				map.remove(j);
+			}
+			System.out.println(map);
+			renderJson(lists);
+		}
+		
+	}
+	
+	/**
+	 * 按名称搜索
+	 * 参数：名称：recipesName
+	 */
 	public void searchByRecipesName(){
 		HttpServletRequest r = getRequest();
 		String recipesName = r.getParameter("recipesName");
@@ -699,7 +741,7 @@ public class HttpController extends Controller {
 			renderText("");
 			return;
 		}else{
-			List<Recipes> list = Recipes.dao.find("select recipesName,recipesMfood,recipesId from"
+			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from"
 					+ " recipes");
 			JSONArray json = new JSONArray(list);
 			
@@ -728,7 +770,7 @@ public class HttpController extends Controller {
 	}
 	
 	/**
-	 * 按食材搜索
+	 * 按时间搜索
 	 * 参数：时间：recipesTime
 	 */
 	public void searchByRecipesTime(){
@@ -739,7 +781,7 @@ public class HttpController extends Controller {
 			renderText("");
 			return;
 		}else{
-			List<Recipes> list = Recipes.dao.find("select recipesName,recipesTime,recipesId from"
+			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from"
 					+ " recipes where recipesTime <=" + "\"" + recipesTime + "\""
 					+ " order by recipesTime asc");
 			renderJson(list);
