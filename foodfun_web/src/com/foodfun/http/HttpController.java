@@ -43,6 +43,9 @@ public class HttpController extends Controller {
 		String number = getPara("num");
 		int num = Integer.parseInt(number);
 		
+		String sql = "select commend.commendId,recipesIntro,recipesName,recipesId,recipesImage from recipes,commend "
+				+ "where commend.FKcommendId = recipes.recipesId";
+		
 		Page<Recipes> pageRecipes = Recipes.dao.paginate(num, 4, 
 				"select commend.commendId,recipesIntro,recipesName,recipesId,recipesImage",
 				"from recipes,commend where commend.FKcommendId = recipes.recipesId");
@@ -56,7 +59,7 @@ public class HttpController extends Controller {
 	}
 	
 	/**
-	 * 获得拾趣的标题
+	 * 获得拾趣的标题，图片
 	 */
 	public void getFunTitle(){
 		String number = getPara("num");
@@ -67,6 +70,7 @@ public class HttpController extends Controller {
 		setAttr("Fun",list);
 		
 		//返回拾趣标题与图片集合的json串
+
 		renderJson();
 	}
 	
@@ -79,6 +83,7 @@ public class HttpController extends Controller {
 				+ "limit 10");
 		setAttr("Ranklist",list);
 		//返回食谱名称及收藏数量集合的json串
+
 		renderJson();
 	}
 	
@@ -134,6 +139,7 @@ public class HttpController extends Controller {
 	public void getFunById(){
 		HttpServletRequest r = getRequest();
 		String funId = r.getParameter("funId");
+//		String funId = "1";
 		List<Fun> list = Fun.dao.find("select * from fun where "
 				+ "funId=" + "\"" + funId + "\"");
 		
@@ -169,32 +175,45 @@ public class HttpController extends Controller {
 //	}
 	
 	/**
-	 * 根据分类的id获取美食的列表
-	 * 参数：分类id：classifyId 
+	 * 根据美食id获取美食的列表
+	 * 参数：美食id：recipesId
 	 * 返回值：食谱的id，名称，时间，收藏数量，简介，图片
 	 */
-	public void getClassifyListById(){ 
+//	public void getRecipesListById(){
+//		HttpServletRequest r = getRequest();
+//		String recipesId = r.getParameter("classifyName");
+//		List<Recipes> type = Recipes.dao.find("select FKclassifyId,classifyId from "
+//				+ "classify where classifyName=" + "\"" + classifyName + "\"");
+//	}
+	
+	/**
+	 * 根据分类的名称获取美食的列表
+	 * 参数：分类id：classifyName
+	 * 返回值：食谱的id，名称，时间，收藏数量，简介，图片
+	 */
+	public void getClassifyListByName(){ 
 		HttpServletRequest r = getRequest();
-		String classifyId = r.getParameter("classifyId");
-		Classify type = Classify.dao.findFirst("select FKclassifyId from "
-				+ "classify where classifyId=" + "\"" + classifyId + "\"");
-		String str = type.toString();
-		String string = str.substring(str.indexOf(":")+1, str.lastIndexOf("}"));
+		String classifyName = r.getParameter("classifyName");
+		List<Classify> type = Classify.dao.find("select FKclassifyId,classifyId from "
+				+ "classify where classifyName=" + "\"" + classifyName + "\"");
+		JSONArray json = new JSONArray(type);
+		int FKID = json.getJSONObject(0).getInt("FKclassifyId");
+		int classifyId = json.getJSONObject(0).getInt("classifyId");
 		
-		if (string.equals("5")) {
+		if (FKID == 5) {
 			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesType="
 					+ "\"" + classifyId + "\"";
 			List<Recipes> list = Recipes.dao.find(sql);
 			renderJson(list);
 		}
-		if (string.equals("6")) {
-			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesType="
+		if (FKID == 6) {
+			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesEffect="
 					+ "\"" + classifyId + "\"";
 			List<Recipes> list = Recipes.dao.find(sql);
 			renderJson(list);
 		}
-		if (string.equals("6")) {
-			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesType="
+		if (FKID == 7) {
+			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesTaste="
 					+ "\"" + classifyId + "\"";
 			List<Recipes> list = Recipes.dao.find(sql);
 			renderJson(list);
@@ -210,19 +229,42 @@ public class HttpController extends Controller {
 		String userPassword = r.getParameter("userPassword");
 		
 		User user = User.dao.findFirst("select * from user where"
-				+ "userAccount=" + "\"" + userAccount + "\"");
+				+ " userAccount=" + "\"" + userAccount + "\"");
 		if(user != null){
-			User user2 = User.dao.findFirst("select userId,userImage from user where"
-					+ "userAccount=" + "\"" + userAccount + "\"" 
-					+ "userPassword=" + "\"" + userPassword + "\"");
+			User user2 = User.dao.findFirst("select userId from user where"
+					+ " userAccount=" + "\"" + userAccount + "\"" 
+					+ " and userPassword=" + "\"" + userPassword + "\"");
 			if(user2 != null){
 				//返回用户的id及头像
 				renderJson(user2);
 			}else{
+				//密码不正确
 				renderText("2");
 			}
 		}else{
+			//账号不存在
 			renderText("0");
+		}
+	}
+	
+	/**
+	 * 根据用户id获取用户信息
+	 * 参数：id：userId
+	 */
+	public void getUser(){
+		HttpServletRequest r = getRequest();
+		String userId = r.getParameter("userId");
+		
+//		String userId = "3";		
+		User user = User.dao.findFirst("select * from user where"
+				+ " userId=" + "\"" + userId + "\"");
+		
+		if(user == null){
+			//错误
+			renderText("0");
+		}else{
+			//用户信息
+			renderJson(user);
 		}
 	}
 	
@@ -244,8 +286,10 @@ public class HttpController extends Controller {
 		User uNum = User.dao.findFirst("select * from user where "
 				+ "userNum=" + "\"" + userNum + "\"");
 		if (uAccount != null) {
+			//账号已存在
 			renderText("0");
 		}else if(uNum != null){
+			//手机号已经使用
 			renderText("1");
 		}else{
 			User user = new User();
@@ -268,17 +312,37 @@ public class HttpController extends Controller {
 	}
 	
 	/**
+	 * 判断账号是否存在
+	 */
+	public void isUserAccount(){
+		HttpServletRequest r = getRequest();
+		String userAccount = r.getParameter("userAccount");
+		User uAccount = User.dao.findFirst("select * from user where "
+				+ "userAccount=" + "\"" + userAccount + "\"");
+		
+		if (uAccount != null) {
+			//账号已存在
+			renderText("0");
+		}else{
+			//账号不存在
+			renderText("1");
+		}
+	}
+	
+	/**
 	 * 食谱收藏接口
 	 * 参数：1、用户id：FKcollectUser 2、食谱id：FKrecipesId
 	 */
 	public void recipesCollect(){
 		HttpServletRequest r = getRequest();
 		String FKcollectUser = r.getParameter("FKcollectUser");
-		String FKrecipesId = r.getParameter("FKrecipesId");
+		String recipesId = r.getParameter("FKrecipesId");
 		
 		Collect c = Collect.dao.findFirst("select * from collect "
 				+ "where collectUser=" + "\"" + FKcollectUser + "\""
-				+ " and FKcollectId=" + "\"" + FKrecipesId + "\"");
+				+ " and FKcollectId=" + "\"" + recipesId + "\"");
+		Recipes list = Recipes.dao.findFirst("select * from recipes where "
+				 + "recipesId=" + "\"" + recipesId + "\"");
 		
 		if (c != null) {
 			//该食谱已经收藏
@@ -286,10 +350,12 @@ public class HttpController extends Controller {
 		}else{
 			Collect collect = new Collect();
 			collect.setFKcollectUser(Integer.parseInt(FKcollectUser));
-			collect.setFKrecipesId(Integer.parseInt(FKrecipesId));
+			collect.setFKrecipesId(Integer.parseInt(recipesId));
+			list.setRecipesCollect(list.getRecipesCollect() + 1);
 			
 			try {
 				collect.save();
+				list.update();
 				//收藏成功
 				renderText("1");
 			} catch (Exception e) {
@@ -611,6 +677,47 @@ public class HttpController extends Controller {
 	 * 按名称搜索
 	 * 参数：名称：recipesName
 	 */
+	public void searchShowByRecipesName(){
+		HttpServletRequest r = getRequest();
+		String recipesName = r.getParameter("recipesName");
+//		String recipesName = "新疆大盘肚";
+		if (recipesName == "") {
+			renderText("");
+			return;
+		}else{
+			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from"
+					+ " recipes");
+			JSONArray json = new JSONArray(list);
+			
+			Map<Integer,Double> map = new TreeMap<>();
+			for (int i = 0; i < json.length(); i++) {
+				JSONObject jsonObject = json.getJSONObject(i);
+				String str = jsonObject.getString("recipesName");
+				double f = SimilarDegree(str,recipesName);
+				map.put(i, f);
+			}
+			
+			List<Recipes> lists = new ArrayList<>();
+			
+			int k = map.size();
+			for (int i = 0; i < k; i++) {
+				int j = getMax(map);
+//				lists.add(list.get(j));
+				if(map.get(j) != 0){
+					lists.add(list.get(j));
+				}
+				map.remove(j);
+			}
+			System.out.println(map);
+			renderJson(lists);
+		}
+		
+	}
+	
+	/**
+	 * 按名称搜索
+	 * 参数：名称：recipesName
+	 */
 	public void searchByRecipesName(){
 		HttpServletRequest r = getRequest();
 		String recipesName = r.getParameter("recipesName");
@@ -659,7 +766,7 @@ public class HttpController extends Controller {
 			renderText("");
 			return;
 		}else{
-			List<Recipes> list = Recipes.dao.find("select recipesName,recipesMfood,recipesId from"
+			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from"
 					+ " recipes");
 			JSONArray json = new JSONArray(list);
 			
@@ -688,7 +795,7 @@ public class HttpController extends Controller {
 	}
 	
 	/**
-	 * 按食材搜索
+	 * 按时间搜索
 	 * 参数：时间：recipesTime
 	 */
 	public void searchByRecipesTime(){
@@ -699,7 +806,7 @@ public class HttpController extends Controller {
 			renderText("");
 			return;
 		}else{
-			List<Recipes> list = Recipes.dao.find("select recipesName,recipesTime,recipesId from"
+			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from"
 					+ " recipes where recipesTime <=" + "\"" + recipesTime + "\""
 					+ " order by recipesTime asc");
 			renderJson(list);
