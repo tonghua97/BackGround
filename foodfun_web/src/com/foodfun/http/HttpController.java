@@ -315,11 +315,13 @@ public class HttpController extends Controller {
 	public void recipesCollect(){
 		HttpServletRequest r = getRequest();
 		String FKcollectUser = r.getParameter("FKcollectUser");
-		String FKrecipesId = r.getParameter("FKrecipesId");
+		String recipesId = r.getParameter("FKrecipesId");
 		
 		Collect c = Collect.dao.findFirst("select * from collect "
 				+ "where collectUser=" + "\"" + FKcollectUser + "\""
-				+ " and FKcollectId=" + "\"" + FKrecipesId + "\"");
+				+ " and FKcollectId=" + "\"" + recipesId + "\"");
+		Recipes list = Recipes.dao.findFirst("select * from recipes where "
+				 + "recipesId=" + "\"" + recipesId + "\"");
 		
 		if (c != null) {
 			//该食谱已经收藏
@@ -327,10 +329,12 @@ public class HttpController extends Controller {
 		}else{
 			Collect collect = new Collect();
 			collect.setFKcollectUser(Integer.parseInt(FKcollectUser));
-			collect.setFKrecipesId(Integer.parseInt(FKrecipesId));
+			collect.setFKrecipesId(Integer.parseInt(recipesId));
+			list.setRecipesCollect(list.getRecipesCollect() + 1);
 			
 			try {
 				collect.save();
+				list.update();
 				//收藏成功
 				renderText("1");
 			} catch (Exception e) {
