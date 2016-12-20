@@ -84,7 +84,6 @@ public class FoodfunConfig extends JFinalConfig{
 	 * 配置处理器
 	 */
 	public void configHandler(Handlers me) {
-		me.add(new ContextPathHandler("ctx"));
 	}
 	/**
 	 * 建议使用 JFinal 手册推荐的方式启动项目
