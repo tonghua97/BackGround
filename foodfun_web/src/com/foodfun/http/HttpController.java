@@ -175,18 +175,6 @@ public class HttpController extends Controller {
 //	}
 	
 	/**
-	 * 根据美食id获取美食的列表
-	 * 参数：美食id：recipesId
-	 * 返回值：食谱的id，名称，时间，收藏数量，简介，图片
-	 */
-//	public void getRecipesListById(){
-//		HttpServletRequest r = getRequest();
-//		String recipesId = r.getParameter("classifyName");
-//		List<Recipes> type = Recipes.dao.find("select FKclassifyId,classifyId from "
-//				+ "classify where classifyName=" + "\"" + classifyName + "\"");
-//	}
-	
-	/**
 	 * 根据分类的名称获取美食的列表
 	 * 参数：分类id：classifyName
 	 * 返回值：食谱的id，名称，时间，收藏数量，简介，图片
@@ -231,7 +219,7 @@ public class HttpController extends Controller {
 		User user = User.dao.findFirst("select * from user where"
 				+ " userAccount=" + "\"" + userAccount + "\"");
 		if(user != null){
-			User user2 = User.dao.findFirst("select userId from user where"
+			User user2 = User.dao.findFirst("select userId,userName from user where"
 					+ " userAccount=" + "\"" + userAccount + "\"" 
 					+ " and userPassword=" + "\"" + userPassword + "\"");
 			if(user2 != null){
