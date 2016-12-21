@@ -327,8 +327,8 @@ public class HttpController extends Controller {
 		String recipesId = r.getParameter("FKrecipesId");
 		
 		Collect c = Collect.dao.findFirst("select * from collect "
-				+ "where collectUser=" + "\"" + FKcollectUser + "\""
-				+ " and FKcollectId=" + "\"" + recipesId + "\"");
+				+ "where FKcollectUser=" + "\"" + FKcollectUser + "\""
+				+ " and FKrecipesId=" + "\"" + recipesId + "\"");
 		Recipes list = Recipes.dao.findFirst("select * from recipes where "
 				 + "recipesId=" + "\"" + recipesId + "\"");
 		
@@ -361,23 +361,30 @@ public class HttpController extends Controller {
 	 */
 	public void recipesCollectDelete(){
 		HttpServletRequest r = getRequest();
-		String FKrecipesId = r.getParameter("FKrecipesId");
+		String recipesId = r.getParameter("FKrecipesId");
 		String FKcollectUser = r.getParameter("FKcollectUser");
-		Collect c = Collect.dao.findFirst("select * from collect "
-				+ "where collectUser=" + "\"" + FKcollectUser + "\""
-				+ " and FKcollectId=" + "\"" + FKrecipesId + "\"");
 		
+		Collect c = Collect.dao.findFirst("select * from collect "
+				+ "where FKcollectUser=" + "\"" + FKcollectUser + "\""
+				+ " and FKrecipesId=" + "\"" + recipesId + "\"");
+		Recipes list = Recipes.dao.findFirst("select * from recipes where "
+				 + "recipesId=" + "\"" + recipesId + "\"");
+		
+		JSONObject json = new JSONObject(c);
+		int collectId = json.getInt("collectId");
 		if (c == null) {
 			//此食谱没有收藏
 			renderText("0");
 		}else{
-			String str = c.toString();
-			String string = str.substring(str.indexOf(":")+1, str.lastIndexOf("}"));
-			boolean b = Collect.dao.deleteById(string);
-			if (b) {
+			list.setRecipesCollect(list.getRecipesCollect() - 1);
+			
+			try {
+				Collect.dao.deleteById(collectId);
+				list.update();
 				//删除成功
 				renderText("1");
-			}else{
+			} catch (Exception e) {
+				// TODO: handle exception
 				//删除失败
 				renderText("2");
 			}
