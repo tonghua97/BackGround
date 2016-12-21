@@ -402,7 +402,7 @@ public class HttpController extends Controller {
 		String funcollectUser = r.getParameter("funcollectUser");
 		String FKfunId = r.getParameter("FKfunId");
 		
-		String sql = "select * from collect "
+		String sql = "select * from funcollect "
 				+ "where funcollectUser=" + "\"" + funcollectUser + "\""
 				+ " and FKfunId=" + "\"" + FKfunId + "\"";
 		Funcollect fun = Funcollect.dao.findFirst(sql);
@@ -436,19 +436,20 @@ public class HttpController extends Controller {
 		String funcollectUser = r.getParameter("funcollectUser");
 		String FKfunId = r.getParameter("FKfunId");
 		
-		String sql = "select * from collect "
+		String sql = "select * from funcollect "
 				+ "where funcollectUser=" + "\"" + funcollectUser + "\""
 				+ " and FKfunId=" + "\"" + FKfunId + "\"";
 		
 		Funcollect fun = Funcollect.dao.findFirst(sql);
 		
+		JSONObject json = new JSONObject(fun);
+		int funcollectId = json.getInt("funcollectId");
+		
 		if (fun == null) {
 			//该拾趣没有收藏
 			renderText("0");
 		}else{
-			String str = fun.toString();
-			String string = str.substring(str.indexOf(":")+1, str.lastIndexOf("}"));
-			boolean b = Funcollect.dao.deleteById(string);
+			boolean b = Funcollect.dao.deleteById(funcollectId);
 			if (b) {
 				//删除成功
 				renderText("1");
@@ -466,9 +467,10 @@ public class HttpController extends Controller {
 	public void selectCollectRecipes(){
 		HttpServletRequest r = getRequest();
 		String FKcollectUser = r.getParameter("FKcollectUser");
+		
 		String SQL = "select * from collect where FKcollectUser="
 				+ "\"" + FKcollectUser + "\"";
-		String sql = "select recipesId,recipesName,recipesIntro,recipesImage from "
+		String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from "
 				+ "recipes,collect where FKrecipesId=recipesId and "
 				+ "FKcollectUser=" + "\"" + FKcollectUser + "\"";
 		List<Collect> collect = Collect.dao.find(SQL);
@@ -506,6 +508,23 @@ public class HttpController extends Controller {
 			List<Fun> list = Fun.dao.find(sql);
 			renderJson(list);
 		}
+	}
+	
+	/**
+	 * 根据用户的id获取用户的昵称
+	 * 参数：userId
+	 */
+	public void getUserName(){
+		HttpServletRequest r = getRequest();
+		String userId = r.getParameter("userId");
+		
+		String sql = "select userName from user where userId=" + "\"" + 
+				userId + "\"";
+		User user = User.dao.findFirst(sql);
+		
+		JSONObject json = new JSONObject(user);
+		String userName = json.getString("userName");
+		renderText(userName);
 	}
 	
 	/**
@@ -548,8 +567,8 @@ public class HttpController extends Controller {
 		String userId = r.getParameter("userId");
 		String userNum = r.getParameter("userNum");
 		
-		String sql = "select * from user where userNum=" + "\"" + 
-				userNum + "\"";
+		String sql = "select * from user where userId=" + "\"" + 
+				userId + "\"";
 		User user = User.dao.findFirst(sql);
 		
 		if (user == null) {
@@ -579,8 +598,8 @@ public class HttpController extends Controller {
 		String userId = r.getParameter("userId");
 		String userPost = r.getParameter("userPost");
 		
-		String sql = "select * from user where userPost=" + "\"" + 
-				userPost + "\"";
+		String sql = "select * from user where userId=" + "\"" + 
+				userId + "\"";
 		User user = User.dao.findFirst(sql);
 		
 		if (user == null) {
@@ -610,8 +629,8 @@ public class HttpController extends Controller {
 		String userId = r.getParameter("userId");
 		String userSex = r.getParameter("userSex");
 		
-		String sql = "select * from user where userSex=" + "\"" + 
-				userSex + "\"";
+		String sql = "select * from user where userId=" + "\"" + 
+				userId + "\"";
 		User user = User.dao.findFirst(sql);
 		
 		if (user == null) {
@@ -762,7 +781,7 @@ public class HttpController extends Controller {
 			renderText("");
 			return;
 		}else{
-			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from"
+			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage,recipesMfood from"
 					+ " recipes");
 			JSONArray json = new JSONArray(list);
 			
@@ -771,6 +790,7 @@ public class HttpController extends Controller {
 				JSONObject jsonObject = json.getJSONObject(i);
 				String str = jsonObject.getString("recipesMfood");
 				double f = SimilarDegree(str,recipesMfood);
+				System.out.println(f);
 				map.put(i, f);
 			}
 			
@@ -780,7 +800,7 @@ public class HttpController extends Controller {
 			for (int i = 0; i < k; i++) {
 				int j = getMax(map);
 //				lists.add(list.get(j));
-				if(map.get(j) != 0){
+				if(map.get(j) != 0.0){
 					lists.add(list.get(j));
 				}
 				map.remove(j);
