@@ -120,6 +120,23 @@ public class HttpController extends Controller {
 	}
 	
 	/**
+	 * 根据名称获得美食id
+	 * 参数：recipesName String类型
+	 */
+	public void getRecipesIdByName(){
+		HttpServletRequest r = getRequest();
+		String recipesName = r.getParameter("recipesName");
+		Recipes list = Recipes.dao.findFirst("select recipesId from recipes where "
+				 + "recipesName=" + "\"" + recipesName + "\"");
+		
+		JSONObject json = new JSONObject(list);
+		int id = json.getInt("recipesId");
+
+		//食谱的id
+		renderText(id+"");
+	}
+	
+	/**
 	 * 根据拾趣标题获得拾趣集合
 	 * 参数：funTitle String类型
 	 */
