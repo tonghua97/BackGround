@@ -209,7 +209,7 @@ public class HttpController extends Controller {
 		User user = User.dao.findFirst("select * from user where"
 				+ " userAccount=" + "\"" + userAccount + "\"");
 		if(user != null){
-			User user2 = User.dao.findFirst("select userId from user where"
+			User user2 = User.dao.findFirst("select userId,userName from user where"
 					+ " userAccount=" + "\"" + userAccount + "\"" 
 					+ " and userPassword=" + "\"" + userPassword + "\"");
 			if(user2 != null){
