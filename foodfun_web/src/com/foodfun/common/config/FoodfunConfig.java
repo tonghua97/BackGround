@@ -15,6 +15,7 @@ import com.foodfun.recipes.RecipesController;
 import com.foodfun.test.TestController;
 import com.foodfun.user.UserController;
 import com.foofun.login.LoginController;
+import com.foofun.login.LoginInterceptor;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -22,6 +23,7 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
+import com.jfinal.ext.interceptor.SessionInViewInterceptor;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
@@ -80,7 +82,10 @@ public class FoodfunConfig extends JFinalConfig{
 	/**
 	 * ≈‰÷√»´æ÷¿πΩÿ∆˜
 	 */
-	public void configInterceptor(Interceptors me) {}
+	public void configInterceptor(Interceptors me) {
+		//me.add(new SessionInViewInterceptor(true));
+		me.add(new LoginInterceptor());
+	}
 	/**
 	 * ≈‰÷√¥¶¿Ì∆˜
 	 */
