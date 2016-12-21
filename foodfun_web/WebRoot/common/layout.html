@@ -136,12 +136,11 @@
 					<div class="navbar-header pull-right" role="navigation">
 						<ul class="nav ace-nav">
 							<li class="light-blue">
-								<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-									<span class="user-info">
-										<small>欢迎光临,</small>
-										admin
-									</span>
+								<a data-toggle="dropdown" href="" class="dropdown-toggle">
+									<span id="name" class="user-info">欢迎光临!</span>
+									<span id="exit" style="margin-left:20px;">退出</span>
 								</a>
+								
 							</li>
 						</ul><!-- /.ace-nav -->
 					</div><!-- /.navbar-header -->
@@ -176,6 +175,26 @@
 
                 toggle = !toggle;
             });
+			
+			$("#exit").click(function (){
+				$.ajax({
+					type: "get",
+					url: "/exit",
+					datatype: "json",
+					success: function (data) {
+						if(data.msg == "success"){
+							alert("退出成功");
+							location.reload();
+						}else{
+							alert(data.msg);
+						}
+					},
+					error: function (data, status, e)//服务器响应失败处理函数
+					{
+					 alert(e);
+					}
+				});
+			});
         </script>
     </body>
 </html>
