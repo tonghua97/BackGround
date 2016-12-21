@@ -14,6 +14,7 @@ import com.foodfun.openuser.OpenuserController;
 import com.foodfun.recipes.RecipesController;
 import com.foodfun.test.TestController;
 import com.foodfun.user.UserController;
+import com.foofun.login.LoginController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -54,6 +55,7 @@ public class FoodfunConfig extends JFinalConfig{
 		me.add("/http", HttpController.class);
 		me.add("/openuser", OpenuserController.class);
 		me.add("/funcollect", FuncollectController.class);
+		me.add("/login", LoginController.class);
 	}
 	
 	public static C3p0Plugin createC3p0Plugin() {
