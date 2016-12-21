@@ -40,3 +40,27 @@
 .solid div textarea{
 	margin-left:10px;
 }
+.count div {
+	float:left; 
+width:100%;
+}
+.statistics{
+	border-left:5px solid #7cb342;
+	padding-left:5px;
+}
+.itemnum{
+	font-size:50px;
+	font-family:微软雅黑;
+	margin-left:10px;
+	margin-bottom:2px;
+}
+.itemname{
+	font-size:16px;
+	font-family:微软雅黑;
+	margin-left:10px;
+}
+.count_title{
+	font-family:微软雅黑;
+	border-bottom:1px solid #999999;
+	padding-bottom:5px;
+}

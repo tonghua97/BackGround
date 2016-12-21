@@ -14,6 +14,7 @@ import com.foodfun.common.model.Commend;
 import com.foodfun.common.model.Fun;
 import com.foodfun.common.model.Funcollect;
 import com.foodfun.common.model.Mclassify;
+import com.foodfun.common.model.Openuser;
 import com.foodfun.common.model.Recipes;
 import com.foodfun.common.model.Test;
 import com.foodfun.common.model.User;
@@ -58,24 +59,32 @@ public class HttpController extends Controller {
 	}
 	
 	/**
-	 * 获得拾趣的标题
+	 * 获得拾趣的标题，图片
 	 */
 	public void getFunTitle(){
-		List<Fun> list = Fun.dao.find("select funTitle,funImage from fun");
+		String number = getPara("num");
+		int num = Integer.parseInt(number);
+		Page<Fun> pageFun = Fun.dao.paginate(num, 5, "select funId,funTitle,funImage", "from fun");
+        List<Fun> list = pageFun.getList();
+		setAttr("totalPage",pageFun.getTotalPage());
+		setAttr("Fun",list);
 		
 		//返回拾趣标题与图片集合的json串
-		renderJson(list);
+
+		renderJson();
 	}
 	
 	/**
-	 * 获得美食名称及收藏数量
+	 * 获得排行榜（美食名称及收藏数量）
 	 */
-	public void getRecipesName(){
-		List<Recipes> list = Recipes.dao.find("select recipesName,recipesCollect from recipes "
-				+ "order by recipesCollect desc");
-		
+	public void getRanklist(){
+		List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesImage,recipesCollect "
+				+ "from recipes order by recipesCollect desc "
+				+ "limit 10");
+		setAttr("Ranklist",list);
 		//返回食谱名称及收藏数量集合的json串
-		renderJson(list);
+
+		renderJson();
 	}
 	
 	/**
@@ -130,6 +139,7 @@ public class HttpController extends Controller {
 	public void getFunById(){
 		HttpServletRequest r = getRequest();
 		String funId = r.getParameter("funId");
+//		String funId = "1";
 		List<Fun> list = Fun.dao.find("select * from fun where "
 				+ "funId=" + "\"" + funId + "\"");
 		
@@ -624,14 +634,14 @@ public class HttpController extends Controller {
 	/**
 	 * 统计数量
 	 */
-	public void Count(){
-		Mclassify list = Mclassify.dao.findFirst("select count(*) from mclassify");
-		System.out.println(list.toString());
-		String str = list.toString();
-		String string = str.substring(str.indexOf(":")+1, str.lastIndexOf("}"));
-		System.out.println(string);
-		renderJson(list);
-	}
+//	public void Count(){
+//		Mclassify list = Mclassify.dao.findFirst("select count(*) from mclassify");
+//		System.out.println(list.toString());
+//		String str = list.toString();
+//		String string = str.substring(str.indexOf(":")+1, str.lastIndexOf("}"));
+//		System.out.println(string);
+//		renderJson(list);
+//	}
 	
 	/**
 	 * 得到美食名称及id

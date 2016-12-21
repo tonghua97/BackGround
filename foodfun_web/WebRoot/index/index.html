@@ -7,61 +7,61 @@
 	</ol>
 	<div>
 		<div style="float:left; width:100%;border-bottom:1px solid #999999;padding-bottom:5px;">
-			<h4 style="font-family:微软雅黑;border-bottom:1px solid #999999;padding-bottom:5px;">数据统计</h4>
+			<h4 class="count_title">数据统计</h4>
 			<div style="padding-left:10px;padding-right:10px;">
 				<div style="float:left;width:33%;">
 					<div>
-						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
-							<p style="font-size:50px;font-family:微软雅黑;margin-bottom:2px;">123</p>
-							<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">食谱 Cookbook</p>					
+						<div class="statistics">
+							<p id="rNum" class="itemnum">${(Recipes)!}</p>
+							<p class="itemname">食谱 Recipes</p>					
 						</div>				
 					</div>
 				</div>
 				<div style="float:left;width:33%;">
 					<div>
-						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
-							<p style="font-size:50px;font-family:微软雅黑;margin-bottom:2px;">11</p>
-							<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">推荐 Commend</p>					
+						<div class="statistics">
+							<p id="cNum" class="itemnum">${(Commend)!}</p>
+							<p class="itemname">推荐 Commend</p>					
 						</div>				
 					</div>
 				</div>
 				<div style="float:left;width:33%;">
 					<div>
-						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
-							<p style="font-size:50px;font-family:微软雅黑;margin-bottom:2px;">32</p>
-							<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">拾趣 Pickfun</p>					
+						<div class="statistics">
+							<p id="fNum" class="itemnum">${(Fun)!}</p>
+							<p class="itemname">拾趣 Pickfun</p>					
 						</div>			
 					</div>
 				</div>
 			</div>		
 		</div>
 		<div style="float:left; width:100%;">
-			<h4 style="font-family:微软雅黑;border-bottom:1px solid #999999;padding-bottom:5px;">用户统计</h4>
+			<h4 class="count_title">用户统计</h4>
 			<div>
 				<div style="float:left;width:48%;border:1px solid #999999;margin:10px;padding:10px;background:#ffffff;">
 					<div>
-						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
-							<p style="font-size:40px;font-family:微软雅黑;margin-bottom:2px;">102</p>
-							<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">用户 User</p>					
+						<div class="statistics">
+							<p id="userTotal" class="itemnum">${(UserTotal)!}</p>
+							<p class="itemname">用户 User</p>					
 						</div>
 						<div>
 							<div style="float:left;width:50%;margin-left:30px">
-								<p style="font-size:40px;font-family:微软雅黑;margin-bottom:2px;">85%</p>
-								<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">本站用户</p>
+								<p id="user" class="itemnum">${(User)!}%</p>
+								<p class="itemname">本站用户</p>
 							</div>
 							<div style="float:left;width:40%">
-								<p style="font-size:40px;font-family:微软雅黑;margin-bottom:2px;">15%</p>
-								<p style="font-size:16px;font-family:微软雅黑;margin-left:10px;">第三方用户</p>
+								<p id="openuser" class="itemnum">${(Openuser)!}%</p>
+								<p class="itemname">第三方用户</p>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div style="float:left;width:48%;border:1px solid #999999;margin:10px;padding:10px;background:#ffffff;">
 					<div> 
-						<div class="statistics" style="border-left:5px solid #7cb342;padding-left:5px;">
-							<p style="font-size:20px;font-family:微软雅黑;margin-bottom:2px;">近期登录</p>
+						<div class="statistics">
+							<p style="font-size:20px;margin-bottom:2px;font-family:微软雅黑">近期登录</p>
 						</div>
-						<ul style="font-size:20px;font-family:微软雅黑;margin-top:10px;margin-bottom:4px">
+						<ul style="font-size:20px;margin-top:10px;margin-bottom:4px">
 							<li>username</li>
 							<li>username</li>
 							<li>username</li>
@@ -72,7 +72,6 @@
 				</div>
 			</div>		
 		</div>
-		
 	</div>
 	 <!-- 右侧底栏start here-->
 	<div class="copyrights" style="float:left;width:100%">
