@@ -95,14 +95,25 @@ public class HttpController extends Controller {
 	public void getRecipesById(){
 		HttpServletRequest r = getRequest();
 		String recipesId = r.getParameter("recipesId");
+		String userId = r.getParameter("userId");
+		String isCollect = "false";
 		List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesMfood,recipesFood,recipesLevel,recipesIntro,recipesTime,recipesStep,recipesCollect,recipesImage,recipesEffect,classify.classifyName"
 				+ " from recipes"
 				+ " join classify on (recipes.FKrecipesTaste = classify.classifyId)"
 				+ " where recipesId=" + "\"" + recipesId + "\"");
+		Collect c = Collect.dao.findFirst("select * from collect "
+				+ "where FKcollectUser=" + "\"" + userId + "\""
+				+ " and FKrecipesId=" + "\"" + recipesId + "\"");
+		
 		//Ret ret = Ret.create("Recipes",list);
 		//食谱详情的json串
 		//renderJson(ret.getData());
-		renderJson(list);
+		if(c != null){
+			isCollect = "true";
+		}
+		setAttr("IsCollect",isCollect);
+		setAttr("Recipes",list);
+		renderJson();
 	}
 	
 	/**
@@ -349,7 +360,7 @@ public class HttpController extends Controller {
 				+ " and FKrecipesId=" + "\"" + recipesId + "\"");
 		Recipes list = Recipes.dao.findFirst("select * from recipes where "
 				 + "recipesId=" + "\"" + recipesId + "\"");
-		
+		System.out.println(c);
 		if (c != null) {
 			//该食谱已经收藏
 			renderText("0");
@@ -1029,4 +1040,61 @@ public class HttpController extends Controller {
 		} 
   
     }  
+    /**
+     * 修改食谱收藏
+     * 参数：operate操作  add表示添加    delete表示删除；
+     * 		userId 用户Id
+     * 		recipesId 食谱id
+     * 返回值： msg 结果   success 表示成功  exist表示重复添加  null表示重复删除
+     * 		num 收藏数量
+     */
+    public void setRecipesCollect(){
+    	String Operate = getPara("operate");
+		String FKcollectUser =getPara("userId");
+		String recipesId = getPara("recipesId");
+		Collect c = Collect.dao.findFirst("select * from collect "
+				+ "where FKcollectUser=" + "\"" + FKcollectUser + "\""
+				+ " and FKrecipesId=" + "\"" + recipesId + "\"");
+		Recipes list = Recipes.dao.findFirst("select * from recipes where "
+				 + "recipesId=" + "\"" + recipesId + "\"");
+		if(Operate.equals("add")){
+			if(c == null){
+				Collect collect = new Collect();
+				collect.setFKcollectUser(Integer.parseInt(FKcollectUser));
+				collect.setFKrecipesId(Integer.parseInt(recipesId));
+				try {
+					list.setRecipesCollect(list.getRecipesCollect() + 1);		
+					collect.save();
+					list.update();
+					//收藏成功
+					setAttr("msg","success");
+				} catch (Exception e) {
+					//收藏失败
+					setAttr("msg","false");
+				}
+			}else{
+				setAttr("msg","exist");
+			}
+		}else{
+			if(c != null){
+				JSONObject json = new JSONObject(c);
+				int collectId = json.getInt("collectId");
+				try {
+					list.setRecipesCollect(list.getRecipesCollect() - 1);
+					Collect.dao.deleteById(collectId);
+					list.update();
+					//删除成功
+					setAttr("msg","success");
+				} catch (Exception e) {
+					// TODO: handle exception
+					//删除失败
+					setAttr("msg","false");
+				}
+			}else{
+				setAttr("msg","null");
+			}
+		}
+		setAttr("num",list.getRecipesCollect());
+		renderJson();
+	}
 }
