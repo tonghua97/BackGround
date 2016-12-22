@@ -791,7 +791,6 @@ public class HttpController extends Controller {
 				}
 				map.remove(j);
 			}
-			System.out.println(map);
 			renderJson(lists);
 		}
 		
@@ -833,7 +832,6 @@ public class HttpController extends Controller {
 				}
 				map.remove(j);
 			}
-			System.out.println(map);
 			renderJson(lists);
 		}
 	}
@@ -865,7 +863,6 @@ public class HttpController extends Controller {
 			if(map.get(key) >= d){
 				d = map.get(key);
 				i = key;
-				System.out.println(key);
 			}
 		}
 		return i;
