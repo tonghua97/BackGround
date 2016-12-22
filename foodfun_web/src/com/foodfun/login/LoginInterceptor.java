@@ -1,4 +1,4 @@
-package com.foofun.login;
+package com.foodfun.login;
 
 import javax.servlet.http.HttpSession;
 

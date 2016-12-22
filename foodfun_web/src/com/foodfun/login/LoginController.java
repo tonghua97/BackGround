@@ -1,4 +1,4 @@
-package com.foofun.login;
+package com.foodfun.login;
 
 import com.foodfun.common.model.Admin;
 import com.foodfun.index.IndexController;
