@@ -91,6 +91,7 @@ public class HttpController extends Controller {
 	/**
 	 * 根据recipesId获得美食集合
 	 * 参数：recipesId String类型
+	 * 参数:userId
 	 */
 	public void getRecipesById(){
 		HttpServletRequest r = getRequest();
@@ -99,9 +100,8 @@ public class HttpController extends Controller {
 				+ " from recipes"
 				+ " join classify on (recipes.FKrecipesTaste = classify.classifyId)"
 				+ " where recipesId=" + "\"" + recipesId + "\"");
-		//Ret ret = Ret.create("Recipes",list);
+		
 		//食谱详情的json串
-		//renderJson(ret.getData());
 		renderJson(list);
 	}
 	
@@ -577,7 +577,7 @@ public class HttpController extends Controller {
 	
 	/**
 	 * 手机号修改
-	 * 参数：用户id：userId 修改后昵称：userNum
+	 * 参数：用户id：userId 修改后手机号：userNum
 	 */
 	public void setUserNum(){
 		HttpServletRequest r = getRequest();
