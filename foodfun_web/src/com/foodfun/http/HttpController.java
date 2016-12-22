@@ -166,14 +166,21 @@ public class HttpController extends Controller {
 	 * 参数：funId String类型
 	 */
 	public void getFunById(){
-		HttpServletRequest r = getRequest();
-		String funId = r.getParameter("funId");
-//		String funId = "1";
+		String funId = getPara("funId");
+		String userId = getPara("userId");
+		String isCollect = "false";
 		List<Fun> list = Fun.dao.find("select * from fun where "
 				+ "funId=" + "\"" + funId + "\"");
-		
+		Funcollect fun = Funcollect.dao.findFirst("select * from funcollect "
+				+ "where funcollectUser=" + "\"" + userId + "\""
+				+ " and FKfunId=" + "\"" + funId + "\"");
 		//拾趣详细信息的json串
-		renderJson(list);
+		if(fun != null){
+			isCollect = "true";
+		}
+		setAttr("IsCollect",isCollect);
+		setAttr("Fun",list);
+		renderJson();
 	}
 	
 	/**
@@ -344,81 +351,6 @@ public class HttpController extends Controller {
 			//账号不存在
 			renderText("1");
 		}
-	}
-	
-	/**
-	 * 食谱收藏接口
-	 * 参数：1、用户id：FKcollectUser 2、食谱id：FKrecipesId
-	 */
-	public void recipesCollect(){
-		HttpServletRequest r = getRequest();
-		String FKcollectUser = r.getParameter("FKcollectUser");
-		String recipesId = r.getParameter("FKrecipesId");
-		
-		Collect c = Collect.dao.findFirst("select * from collect "
-				+ "where FKcollectUser=" + "\"" + FKcollectUser + "\""
-				+ " and FKrecipesId=" + "\"" + recipesId + "\"");
-		Recipes list = Recipes.dao.findFirst("select * from recipes where "
-				 + "recipesId=" + "\"" + recipesId + "\"");
-		System.out.println(c);
-		if (c != null) {
-			//该食谱已经收藏
-			renderText("0");
-		}else{
-			Collect collect = new Collect();
-			collect.setFKcollectUser(Integer.parseInt(FKcollectUser));
-			collect.setFKrecipesId(Integer.parseInt(recipesId));
-			list.setRecipesCollect(list.getRecipesCollect() + 1);
-			
-			try {
-				collect.save();
-				list.update();
-				//收藏成功
-				renderText("1");
-			} catch (Exception e) {
-				// TODO: handle exception
-				//收藏失败
-				renderText("2");
-			}
-		}
-		
-	}
-	
-	/**
-	 * 取消食谱收藏接口
-	 * 参数：1、用户id：FKcollectUser 2、食谱id：FKrecipesId 
-	 */
-	public void recipesCollectDelete(){
-		HttpServletRequest r = getRequest();
-		String recipesId = r.getParameter("FKrecipesId");
-		String FKcollectUser = r.getParameter("FKcollectUser");
-		
-		Collect c = Collect.dao.findFirst("select * from collect "
-				+ "where FKcollectUser=" + "\"" + FKcollectUser + "\""
-				+ " and FKrecipesId=" + "\"" + recipesId + "\"");
-		Recipes list = Recipes.dao.findFirst("select * from recipes where "
-				 + "recipesId=" + "\"" + recipesId + "\"");
-		
-		JSONObject json = new JSONObject(c);
-		int collectId = json.getInt("collectId");
-		if (c == null) {
-			//此食谱没有收藏
-			renderText("0");
-		}else{
-			list.setRecipesCollect(list.getRecipesCollect() - 1);
-			
-			try {
-				Collect.dao.deleteById(collectId);
-				list.update();
-				//删除成功
-				renderText("1");
-			} catch (Exception e) {
-				// TODO: handle exception
-				//删除失败
-				renderText("2");
-			}
-		}
-		
 	}
 	
 	/**
@@ -1094,4 +1026,49 @@ public class HttpController extends Controller {
 		setAttr("num",list.getRecipesCollect());
 		renderJson();
 	}
+    /**
+     * 修改食趣收藏
+     */
+    public void setFunCollect(){
+    	String Operate = getPara("operate");
+		String funcollectUser =getPara("userId");
+		String FKfunId = getPara("funId");
+		Funcollect fun = Funcollect.dao.findFirst("select * from funcollect "
+				+ "where funcollectUser=" + "\"" + funcollectUser + "\""
+				+ " and FKfunId=" + "\"" + FKfunId + "\"");
+		if(Operate.equals("add")){
+			if(fun == null){
+				Funcollect funcollect = new Funcollect();
+				funcollect.setFuncollectUser(Integer.parseInt(funcollectUser));
+				funcollect.setFKfunId(Integer.parseInt(FKfunId));
+				try {
+					funcollect.save();
+					//收藏成功
+					setAttr("msg","success");
+				} catch (Exception e) {
+					//收藏失败
+					setAttr("msg","false");
+				}
+			}else{
+				setAttr("msg","exist");
+			}
+		}else{
+			if(fun != null){
+				JSONObject json = new JSONObject(fun);
+				int funcollectId = json.getInt("funcollectId");
+				try {
+					Funcollect.dao.deleteById(funcollectId);
+					//删除成功
+					setAttr("msg","success");
+				} catch (Exception e) {
+					// TODO: handle exception
+					//删除失败
+					setAttr("msg","false");
+				}
+			}else{
+				setAttr("msg","null");
+			}
+		}
+		renderJson();
+    }
 }
