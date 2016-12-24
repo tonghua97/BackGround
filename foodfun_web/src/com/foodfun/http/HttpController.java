@@ -1,5 +1,6 @@
 package com.foodfun.http;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.json.Json;
+import com.jfinal.kit.PathKit;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
@@ -1071,4 +1073,38 @@ public class HttpController extends Controller {
 		}
 		renderJson();
     }
+    public void userHeadSculpture(){		
+		UploadFile uf = this.getFile();
+		String userId = this.getPara("userId");
+		String filename = uf.getFileName();
+		//获取图片扩展名
+		String prefix=filename.substring(filename.lastIndexOf(".")+1);
+		
+		//更新数据库存储的头像地址
+		String sql = "select * from user where userId=" + "\"" + 
+					userId + "\"";
+		User user = User.dao.findFirst(sql);
+		
+		if (user == null) {
+			//用户不存在
+			renderText("0");
+		}else{
+			String username = user.getUserName();
+			uf.getFile().renameTo(new File(PathKit.getWebRootPath() + "\\upload\\" + username +"."+prefix));
+			String Url = "http://" + this.getRequest().getRemoteHost() + ":"
+					+ this.getRequest().getLocalPort() + "/upload/" + username +"." + prefix;
+			user.setUserImage(Url);
+			try {
+				user.update();
+				//修改成功
+				renderText("1");
+			} catch (Exception e) {
+				// TODO: handle exception
+				//修改失败
+				renderText("2");
+			}
+		}
+		
+	}
+
 }
