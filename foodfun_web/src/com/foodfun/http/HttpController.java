@@ -226,19 +226,19 @@ public class HttpController extends Controller {
 		int FKID = json.getJSONObject(0).getInt("FKclassifyId");
 		int classifyId = json.getJSONObject(0).getInt("classifyId");
 		
-		if (FKID == 5) {
+		if (FKID == 1) {
 			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesType="
 					+ "\"" + classifyId + "\"";
 			List<Recipes> list = Recipes.dao.find(sql);
 			renderJson(list);
 		}
-		if (FKID == 6) {
+		if (FKID == 2) {
 			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesEffect="
 					+ "\"" + classifyId + "\"";
 			List<Recipes> list = Recipes.dao.find(sql);
 			renderJson(list);
 		}
-		if (FKID == 7) {
+		if (FKID == 3) {
 			String sql = "select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from recipes where FKrecipesTaste="
 					+ "\"" + classifyId + "\"";
 			List<Recipes> list = Recipes.dao.find(sql);
@@ -616,21 +616,9 @@ public class HttpController extends Controller {
 	public void get(){
 		List<Mclassify> list = Mclassify.dao.find("select * from mclassify");
 		JSONArray json = new JSONArray(list);
-		System.out.println(json);
 		renderJson(list);
 	}
 	
-	/**
-	 * 统计数量
-	 */
-//	public void Count(){
-//		Mclassify list = Mclassify.dao.findFirst("select count(*) from mclassify");
-//		System.out.println(list.toString());
-//		String str = list.toString();
-//		String string = str.substring(str.indexOf(":")+1, str.lastIndexOf("}"));
-//		System.out.println(string);
-//		renderJson(list);
-//	}
 	
 	/**
 	 * 得到美食名称及id
@@ -685,7 +673,6 @@ public class HttpController extends Controller {
 				}
 				map.remove(j);
 			}
-			System.out.println(map);
 			renderJson(lists);
 		}
 		
@@ -751,7 +738,6 @@ public class HttpController extends Controller {
 				JSONObject jsonObject = json.getJSONObject(i);
 				String str = jsonObject.getString("recipesMfood");
 				double f = SimilarDegree(str,recipesMfood);
-				System.out.println(f);
 				map.put(i, f);
 			}
 			
@@ -777,13 +763,16 @@ public class HttpController extends Controller {
 	public void searchByRecipesTime(){
 		HttpServletRequest r = getRequest();
 		String recipesTime = r.getParameter("recipesTime");
+		String sTime = recipesTime.split("分")[0];
+		int time = Integer.parseInt(sTime);
 		
 		if (recipesTime == "") {
 			renderText("");
 			return;
 		}else{
 			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from"
-					+ " recipes where recipesTime <=" + "\"" + recipesTime + "\""
+					+ " recipes where convert(substring(recipesTime,1,instr(recipesTime,\"分\")),SIGNED)"
+					+ " <=" + time
 					+ " order by recipesTime asc");
 			renderJson(list);
 		}
@@ -836,7 +825,6 @@ public class HttpController extends Controller {
   
             if (charReg(item)){  
   
-                //System.out.println("--"+item);  
   
                 sb.append(item);  
   
@@ -915,7 +903,6 @@ public class HttpController extends Controller {
 	            }  
 	        }  
 	        
-	        System.out.println(new String(result));
 	        return new String(result); 
 		}else{
 			int n = chars_strA.length;  
@@ -966,7 +953,6 @@ public class HttpController extends Controller {
 	            }  
 	        }  
 	        
-	        System.out.println(new String(result));
 	        return new String(result); 
 		} 
   
