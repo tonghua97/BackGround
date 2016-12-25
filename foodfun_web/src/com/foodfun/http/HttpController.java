@@ -773,7 +773,7 @@ public class HttpController extends Controller {
 			List<Recipes> list = Recipes.dao.find("select recipesId,recipesName,recipesTime,recipesCollect,recipesIntro,recipesImage from"
 					+ " recipes where convert(substring(recipesTime,1,instr(recipesTime,\"分\")),SIGNED)"
 					+ " <=" + time
-					+ " order by recipesTime asc");
+					+ " order by convert(substring(recipesTime,1,instr(recipesTime,\"分\")),SIGNED) asc");
 			renderJson(list);
 		}
 	}
